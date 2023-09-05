@@ -12,5 +12,6 @@ export class ApiConfiguration {
 
 export const ApiGroupPath = {
   USERS: "/users",
+  TEXTS: "/texts"
 } as const;
 export type ApiGroupPath = (typeof ApiGroupPath)[keyof typeof ApiGroupPath];

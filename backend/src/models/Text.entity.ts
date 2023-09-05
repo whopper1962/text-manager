@@ -7,8 +7,8 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
-import { ProjectText } from "./ProjectText.entity";
-import { TextTag } from "./TextTag.entity";
+import { ProjectText } from "@/models/ProjectText.entity";
+import { TextTag } from "@/models/TextTag.entity";
 
 @Entity("texts")
 export class Text {
@@ -16,14 +16,10 @@ export class Text {
   id!: string;
 
   @Column({
-    name: "text",
+    name: "content",
+    nullable: true
   })
-  lastName!: string;
-
-  @Column({
-    name: "tag",
-  })
-  firstName!: string;
+  content!: string;
 
   @CreateDateColumn({
     name: "created_at",

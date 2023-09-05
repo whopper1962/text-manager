@@ -6,9 +6,9 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
-import { ProjectMember } from "./ProjectMember.entity";
-import { ProjectText } from "./ProjectText.entity";
-import { ProjectTag } from "./ProjectTag.entity";
+import { ProjectMember } from "@/models/ProjectMember.entity";
+import { ProjectText } from "@/models/ProjectText.entity";
+import { ProjectTag } from "@/models/ProjectTag.entity";
 
 @Entity("projects")
 export class Project {

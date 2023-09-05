@@ -8,9 +8,8 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
-import { Project } from "./Project.entity";
-import { TextTag } from "./TextTag.entity";
-import { ProjectTag } from "./ProjectTag.entity";
+import { TextTag } from "@/models/TextTag.entity";
+import { ProjectTag } from "@/models/ProjectTag.entity";
 
 @Entity("tags")
 export class Tag {

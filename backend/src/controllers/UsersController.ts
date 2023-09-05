@@ -1,4 +1,4 @@
-import { FetchMembersService } from "@/services/FetchUsersService";
+import { FetchMembersService } from "@/services/users/FetchUsersService";
 import { User } from "@/types/users";
 import { NextFunction, Request, Response } from "express";
 

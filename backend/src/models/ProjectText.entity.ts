@@ -7,8 +7,8 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
-import { Project } from "./Project.entity";
-import { Text } from "./Text.entity";
+import { Project } from "@/models/Project.entity";
+import { Text } from "@/models/Text.entity";
 
 @Entity("project_texts")
 export class ProjectText {
@@ -39,7 +39,7 @@ export class ProjectText {
 
   @OneToOne(() => Text, (text) => text.projectText)
   @JoinColumn({
-    name: "text_id",
+    name: "_id",
     referencedColumnName: "id",
   })
   text?: Text;
