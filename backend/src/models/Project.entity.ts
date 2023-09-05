@@ -7,21 +7,18 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 import { ProjectMember } from "./ProjectMember.entity";
+import { ProjectText } from "./ProjectText.entity";
+import { ProjectTag } from "./ProjectTag.entity";
 
-@Entity("users")
-export class User {
+@Entity("projects")
+export class Project {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 
   @Column({
-    name: "last_name",
+    name: "name",
   })
-  lastName!: string;
-
-  @Column({
-    name: "first_name",
-  })
-  firstName!: string;
+  name!: string;
 
   @CreateDateColumn({
     name: "created_at",
@@ -38,6 +35,12 @@ export class User {
   })
   readonly updatedAt?: Date;
 
-  @OneToMany(() => ProjectMember, (projectMember) => projectMember.member)
+  @OneToMany(() => ProjectMember, (projectMember) => projectMember.project)
   readonly projectMembers?: ProjectMember[];
+
+  @OneToMany(() => ProjectText, (projectText) => projectText.project)
+  readonly projectTexts?: ProjectText[];
+
+  @OneToMany(() => ProjectTag, (projectTag) => projectTag.project)
+  readonly projectTags?: ProjectTag[];
 }

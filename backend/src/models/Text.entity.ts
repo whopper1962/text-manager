@@ -3,23 +3,25 @@ import {
   CreateDateColumn,
   Entity,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
-import { ProjectMember } from "./ProjectMember.entity";
+import { ProjectText } from "./ProjectText.entity";
+import { TextTag } from "./TextTag.entity";
 
-@Entity("users")
-export class User {
+@Entity("texts")
+export class Text {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 
   @Column({
-    name: "last_name",
+    name: "text",
   })
   lastName!: string;
 
   @Column({
-    name: "first_name",
+    name: "tag",
   })
   firstName!: string;
 
@@ -38,6 +40,9 @@ export class User {
   })
   readonly updatedAt?: Date;
 
-  @OneToMany(() => ProjectMember, (projectMember) => projectMember.member)
-  readonly projectMembers?: ProjectMember[];
+  @OneToOne(() => ProjectText, (projectText) => projectText.text)
+  readonly projectText?: ProjectText;
+
+  @OneToMany(() => TextTag, (textTag) => textTag.text)
+  readonly textTags?: TextTag[];
 }

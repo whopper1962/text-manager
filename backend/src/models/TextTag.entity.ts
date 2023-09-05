@@ -1,27 +1,20 @@
 import {
-  Column,
   CreateDateColumn,
   Entity,
-  OneToMany,
+  JoinColumn,
+  ManyToOne,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
-import { ProjectMember } from "./ProjectMember.entity";
+import { Project } from "./Project.entity";
+import { Text } from "./Text.entity";
+import { Tag } from "./Tag.entity";
 
-@Entity("users")
-export class User {
+@Entity("text_tags")
+export class TextTag {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
-
-  @Column({
-    name: "last_name",
-  })
-  lastName!: string;
-
-  @Column({
-    name: "first_name",
-  })
-  firstName!: string;
 
   @CreateDateColumn({
     name: "created_at",
@@ -38,6 +31,17 @@ export class User {
   })
   readonly updatedAt?: Date;
 
-  @OneToMany(() => ProjectMember, (projectMember) => projectMember.member)
-  readonly projectMembers?: ProjectMember[];
+  @ManyToOne(() => Text, (text) => text.textTags)
+  @JoinColumn({
+    name: "text_id",
+    referencedColumnName: "id",
+  })
+  text?: Text;
+
+  @ManyToOne(() => Tag, (tag) => tag.textTags)
+  @JoinColumn({
+    name: "tag_id",
+    referencedColumnName: "id",
+  })
+  tag?: Tag;
 }
