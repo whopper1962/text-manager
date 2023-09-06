@@ -4,15 +4,15 @@ import { TextMaster as TextMasterEntity } from "@/models/TextMaster.entity";
 import { appDataSource } from "@/database/appDataSource";
 import { TextTag } from "@/models/TextTag.entity";
 
-export class FetchTextsService {
-  private TextMasterRepository!: Repository<TextMasterEntity>;
+export class FetchTextsByProjectIdService {
+  private textMasterRepository!: Repository<TextMasterEntity>;
 
   constructor() {
-    this.TextMasterRepository = appDataSource.getRepository(TextMasterEntity);
+    this.textMasterRepository = appDataSource.getRepository(TextMasterEntity);
   }
 
   async execute(projectId: string): Promise<Text[]> {
-    const fetchedText = await this.TextMasterRepository.find({
+    const fetchedText = await this.textMasterRepository.find({
       relations: [
         "textContents",
         "textContents.language",

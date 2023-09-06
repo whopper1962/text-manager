@@ -2,14 +2,14 @@ import type { RouteRecordRaw } from "vue-router";
 
 export const routes: Array<RouteRecordRaw> = [
   {
-    path: "/",
-    name: "HomeView",
-    component: () => import("@/views/HomeView.vue"),
+    path: "/texts",
+    name: "TextsIndex",
+    component: () => import("@/views/texts/TextsIndex.vue"),
   },
   {
     path: "/:catchAll(.*)",
     redirect: {
-      name: "HomeView",
+      name: "TextsIndex",
     },
   },
 ];

@@ -1,4 +1,4 @@
-import { FetchTextsService } from "@/services/texts/FetchTextsByProjectIdService";
+import { FetchTextsByProjectIdService } from "@/services/texts/FetchTextsByProjectIdService";
 import { Text } from "@/types/texts";
 import { NextFunction, Request, Response } from "express";
 
@@ -11,7 +11,7 @@ export class TextsController {
     try {
       // TODO: Get Project ID from session.
       const projectId = "289c2e46-4c5d-11ee-be56-0242ac120002";
-      const texts = await new FetchTextsService().execute(projectId);
+      const texts = await new FetchTextsByProjectIdService().execute(projectId);
       console.log("=============FETCHED TEXTS: CONTROLLER=============");
       console.debug(texts);
       response.json(texts);

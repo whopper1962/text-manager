@@ -1,22 +1,20 @@
 <template>
   <div>
-    <router-view></router-view>
+    <NavigationBar/>
+    <div class="router-view-content">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import NavigationBar from './components/NavigationBar.vue';
+</script>
 
 <style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+.router-view-content {
+  padding: 20px;
+  /* background-color: rgb(173, 172, 172); */
+  /* height: 100vh; */
 }
 </style>
