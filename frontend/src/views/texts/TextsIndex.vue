@@ -1,7 +1,6 @@
 <template>
   <div>
-    <h2 class="border-bottom pb-3 mb-3">Texts</h2>
-    <div class="card h-25 p-3 mb-4">
+    <!-- <div class="card h-25 p-3 mb-4">
       <div class="row g-3 mb-3">
         <div class="col-md-6">
           <label class="form-label">Text</label>
@@ -29,38 +28,60 @@
       <button class="btn btn-success w-25" @click="fetchTexts()">
         Get Texts
       </button>
-    </div>
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th v-for="language in languages" :key="language.id">
-            {{ language.name }}
-          </th>
-          <th>Tags</th>
-          <th>Created at</th>
-          <th>Updated at</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="fetchedText in fetchedTexts" :key="fetchedText.id">
-          <td v-for="language in languages" :key="language.id">
-            {{ fetchedText.text[language.id] }}
-          </td>
-          <td>
-            <button
-              class="btn btn-sm btn-secondary m-1"
-              v-for="tag in fetchedText.tags"
-              :key="tag.id"
-              @click="onClickTag(tag.id)"
+    </div> -->
+
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+      <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <thead
+          class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+        >
+          <tr>
+            <th
+              scope="col"
+              class="px-6 py-3"
+              v-for="language in languages"
+              :key="language.id"
             >
-              {{ tag.name }}
-            </button>
-          </td>
-          <td>{{ formatDateToYyyyMmDdHhMmSs(fetchedText.createdAt) }}</td>
-          <td>{{ formatDateToYyyyMmDdHhMmSs(fetchedText.updatedAt) }}</td>
-        </tr>
-      </tbody>
-    </table>
+              {{ language.name }}
+            </th>
+            <th scope="col" class="px-6 py-3">Tags</th>
+            <th scope="col" class="px-6 py-3">Created at</th>
+            <th scope="col" class="px-6 py-3">Updated at</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 h-[75px]"
+            v-for="fetchedText in fetchedTexts"
+            :key="fetchedText.id"
+          >
+            <td
+              class="px-3 py-2 min-w-max"
+              v-for="language in languages"
+              :key="language.id"
+            >
+              {{ fetchedText.text[language.id] }}
+            </td>
+            <td class="px-3 py-2">
+              <button
+                class="text-white bg-purple-700 hover:bg-purple-800 min-w-max focus:outline-none focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm px-5 py-2.5 m-1 text-center dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 ml-2"
+                v-for="tag in fetchedText.tags"
+                :key="tag.id"
+                @click="onClickTag(tag.id)"
+              >
+                {{ tag.name }}
+              </button>
+            </td>
+            <td class="px-3 py-2">
+              {{ formatDateToYyyyMmDdHhMmSs(fetchedText.createdAt) }}
+            </td>
+            <td class="px-3 py-2">
+              {{ formatDateToYyyyMmDdHhMmSs(fetchedText.updatedAt) }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 

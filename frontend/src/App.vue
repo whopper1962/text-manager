@@ -1,20 +1,14 @@
 <template>
   <div>
-    <NavigationBar/>
-    <div class="router-view-content">
+    <NavigationBar />
+    <div class="p-5 bg-gray-500 h-screen">
       <router-view></router-view>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import NavigationBar from './components/NavigationBar.vue';
+import NavigationBar from "./components/NavigationBar.vue";
 </script>
 
-<style scoped>
-.router-view-content {
-  padding: 20px;
-  /* background-color: rgb(173, 172, 172); */
-  /* height: 100vh; */
-}
-</style>
+<style scoped></style>
