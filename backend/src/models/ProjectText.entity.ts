@@ -39,7 +39,7 @@ export class ProjectText {
 
   @OneToOne(() => Text, (text) => text.projectText)
   @JoinColumn({
-    name: "_id",
+    name: "text_id",
     referencedColumnName: "id",
   })
   text?: Text;

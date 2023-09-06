@@ -9,6 +9,7 @@ export class TextsController {
     next: NextFunction,
   ): Promise<void> {
     try {
+      // TODO: Get Project ID from session.
       const projectId = "15d2a240-4bea-11ee-be56-0242ac120002";
       const texts = await new FetchTextsService().execute(projectId);
       console.log("=============FETCHED TEXTS: CONTROLLER=============");

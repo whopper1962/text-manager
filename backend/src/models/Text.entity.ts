@@ -17,7 +17,6 @@ export class Text {
 
   @Column({
     name: "content",
-    nullable: true
   })
   content!: string;
 
