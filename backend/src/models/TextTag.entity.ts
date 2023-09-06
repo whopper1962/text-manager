@@ -19,7 +19,7 @@ export class TextTag {
     type: "timestamp",
     default: () => "CURRENT_TIMESTAMP(6)",
   })
-  readonly createdAt?: Date;
+  readonly createdAt!: Date;
 
   @UpdateDateColumn({
     name: "updated_at",
@@ -27,7 +27,7 @@ export class TextTag {
     default: () => "CURRENT_TIMESTAMP(6)",
     onUpdate: "CURRENT_TIMESTAMP(6)",
   })
-  readonly updatedAt?: Date;
+  readonly updatedAt!: Date;
 
   @ManyToOne(() => TextMaster, (textMaster) => textMaster.textTags)
   @JoinColumn({

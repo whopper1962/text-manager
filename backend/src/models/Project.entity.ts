@@ -26,7 +26,7 @@ export class Project {
     type: "timestamp",
     default: () => "CURRENT_TIMESTAMP(6)",
   })
-  readonly createdAt?: Date;
+  readonly createdAt!: Date;
 
   @UpdateDateColumn({
     name: "updated_at",
@@ -34,17 +34,17 @@ export class Project {
     default: () => "CURRENT_TIMESTAMP(6)",
     onUpdate: "CURRENT_TIMESTAMP(6)",
   })
-  readonly updatedAt?: Date;
+  readonly updatedAt!: Date;
 
   @OneToMany(() => ProjectMember, (projectMember) => projectMember.project)
-  readonly projectMembers?: ProjectMember[];
+  readonly projectMembers!: ProjectMember[];
 
   @OneToMany(() => TextMaster, (textMaster) => textMaster.project)
-  readonly textMasters?: TextMaster[];
+  readonly textMasters!: TextMaster[];
 
   @OneToMany(() => Language, (language) => language.project)
-  readonly languages?: Language[];
+  readonly languages!: Language[];
 
   @OneToMany(() => Tag, (tag) => tag.project)
-  readonly tags?: Tag[];
+  readonly tags!: Tag[];
 }

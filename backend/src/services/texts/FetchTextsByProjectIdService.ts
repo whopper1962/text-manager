@@ -40,6 +40,8 @@ export class FetchTextsService {
           id: textTag.tag.id,
           name: textTag.tag.name,
         })),
+        createdAt: fetchedText.createdAt,
+        updatedAt: fetchedText.updatedAt,
       };
     });
   }

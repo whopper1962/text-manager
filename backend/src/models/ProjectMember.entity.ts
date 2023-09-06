@@ -28,7 +28,7 @@ export class ProjectMember {
     type: "timestamp",
     default: () => "CURRENT_TIMESTAMP(6)",
   })
-  readonly createdAt?: Date;
+  readonly createdAt!: Date;
 
   @UpdateDateColumn({
     name: "updated_at",
@@ -36,19 +36,19 @@ export class ProjectMember {
     default: () => "CURRENT_TIMESTAMP(6)",
     onUpdate: "CURRENT_TIMESTAMP(6)",
   })
-  readonly updatedAt?: Date;
+  readonly updatedAt!: Date;
 
   @ManyToOne(() => Project, (project) => project.projectMembers)
   @JoinColumn({
     name: "project_id",
     referencedColumnName: "id",
   })
-  project?: Project;
+  project!: Project;
 
   @ManyToOne(() => User, (user) => user.projectMembers)
   @JoinColumn({
     name: "member_id",
     referencedColumnName: "id",
   })
-  member?: User;
+  member!: User;
 }

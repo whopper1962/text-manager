@@ -7,4 +7,6 @@ export type Text = {
   id: string;
   text: Record<string, string>;
   tags: Tag[];
+  createdAt: Date;
+  updatedAt: Date;
 };

@@ -23,12 +23,17 @@ export class User {
   })
   firstName!: string;
 
+  @Column({
+    name: "password",
+  })
+  password!: string;
+
   @CreateDateColumn({
     name: "created_at",
     type: "timestamp",
     default: () => "CURRENT_TIMESTAMP(6)",
   })
-  readonly createdAt?: Date;
+  readonly createdAt!: Date;
 
   @UpdateDateColumn({
     name: "updated_at",
@@ -36,8 +41,8 @@ export class User {
     default: () => "CURRENT_TIMESTAMP(6)",
     onUpdate: "CURRENT_TIMESTAMP(6)",
   })
-  readonly updatedAt?: Date;
+  readonly updatedAt!: Date;
 
   @OneToMany(() => ProjectMember, (projectMember) => projectMember.member)
-  readonly projectMembers?: ProjectMember[];
+  readonly projectMembers!: ProjectMember[];
 }

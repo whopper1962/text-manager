@@ -23,7 +23,7 @@ export class TextMaster {
     type: "timestamp",
     default: () => "CURRENT_TIMESTAMP(6)",
   })
-  readonly createdAt?: Date;
+  readonly createdAt!: Date;
 
   @UpdateDateColumn({
     name: "updated_at",
@@ -31,7 +31,7 @@ export class TextMaster {
     default: () => "CURRENT_TIMESTAMP(6)",
     onUpdate: "CURRENT_TIMESTAMP(6)",
   })
-  readonly updatedAt?: Date;
+  readonly updatedAt!: Date;
 
   @ManyToOne(() => Project, (project) => project.textMasters)
   @JoinColumn({
