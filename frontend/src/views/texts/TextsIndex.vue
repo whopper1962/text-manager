@@ -51,7 +51,7 @@
         </thead>
         <tbody>
           <tr
-            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 h-[75px]"
+            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 h-[70px]"
             v-for="fetchedText in fetchedTexts"
             :key="fetchedText.id"
           >
@@ -82,6 +82,7 @@
         </tbody>
       </table>
     </div>
+    <AppPagniation/>
   </div>
 </template>
 
@@ -94,6 +95,7 @@ import { tagsApiService } from "@/services/TagsApiService";
 import { useFormatHelper } from "@/helpers/formatHelper";
 import { reactive, ref } from "vue";
 import { Tag } from "@/types/tags";
+import AppPagniation from "@/components/AppPagniation.vue";
 
 const fetchedTexts = ref<Text[]>([]);
 const languages = ref<Language[]>([]);
