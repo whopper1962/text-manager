@@ -1,4 +1,5 @@
 import {
+  Column,
   CreateDateColumn,
   Entity,
   JoinColumn,
@@ -8,11 +9,19 @@ import {
 } from "typeorm";
 import { Project } from "@/models/Project.entity";
 import { User } from "@/models/User.entity";
+import { MemberRole } from "@/types/projectMembers";
 
 @Entity("project_members")
 export class ProjectMember {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
+
+  @Column({
+    name: "role",
+    type: "enum",
+    enum: MemberRole,
+  })
+  role!: MemberRole;
 
   @CreateDateColumn({
     name: "created_at",

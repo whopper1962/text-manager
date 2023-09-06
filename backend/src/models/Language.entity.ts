@@ -1,19 +1,25 @@
 import {
+  Column,
   CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
-  OneToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
-import { Project } from "@/models/Project.entity";
-import { Tag } from "@/models/Tag.entity";
+import { TextContent } from "@/models/TextContent.entity";
+import { Project } from "./Project.entity";
 
-@Entity("project_tags")
-export class ProjectTag {
+@Entity("languages")
+export class Language {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
+
+  @Column({
+    name: "name",
+  })
+  name!: string;
 
   @CreateDateColumn({
     name: "created_at",
@@ -30,17 +36,13 @@ export class ProjectTag {
   })
   readonly updatedAt?: Date;
 
-  @ManyToOne(() => Project, (project) => project.projectTexts)
+  @ManyToOne(() => Project, (project) => project.languages)
   @JoinColumn({
     name: "project_id",
     referencedColumnName: "id",
   })
   project?: Project;
 
-  @OneToOne(() => Tag, (text) => text.projectTags)
-  @JoinColumn({
-    name: "tag_id",
-    referencedColumnName: "id",
-  })
-  tag?: Tag;
+  @OneToMany(() => TextContent, (textConetnt) => textConetnt.language)
+  readonly textConetnts?: TextContent[];
 }

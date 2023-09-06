@@ -9,7 +9,7 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 import { TextTag } from "@/models/TextTag.entity";
-import { ProjectTag } from "@/models/ProjectTag.entity";
+import { Project } from "./Project.entity";
 
 @Entity("tags")
 export class Tag {
@@ -36,9 +36,13 @@ export class Tag {
   })
   readonly updatedAt?: Date;
 
+  @ManyToOne(() => Project, (project) => project.tags)
+  @JoinColumn({
+    name: "project_id",
+    referencedColumnName: "id",
+  })
+  project?: Project;
+
   @OneToMany(() => TextTag, (textTag) => textTag.tag)
   readonly textTags?: TextTag[];
-
-  @OneToMany(() => ProjectTag, (projectTag) => projectTag.tag)
-  readonly projectTags?: ProjectTag[];
 }

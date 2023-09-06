@@ -3,12 +3,11 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
-import { Text } from "@/models/Text.entity";
 import { Tag } from "@/models/Tag.entity";
+import { TextMaster } from "./TextMaster.entity";
 
 @Entity("text_tags")
 export class TextTag {
@@ -30,17 +29,17 @@ export class TextTag {
   })
   readonly updatedAt?: Date;
 
-  @ManyToOne(() => Text, (text) => text.textTags)
+  @ManyToOne(() => TextMaster, (textMaster) => textMaster.textTags)
   @JoinColumn({
-    name: "text_id",
+    name: "text_master_id",
     referencedColumnName: "id",
   })
-  text?: Text;
+  textMaster!: TextMaster;
 
   @ManyToOne(() => Tag, (tag) => tag.textTags)
   @JoinColumn({
     name: "tag_id",
     referencedColumnName: "id",
   })
-  tag?: Tag;
+  tag!: Tag;
 }

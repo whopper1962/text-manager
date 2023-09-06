@@ -7,8 +7,9 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 import { ProjectMember } from "@/models/ProjectMember.entity";
-import { ProjectText } from "@/models/ProjectText.entity";
-import { ProjectTag } from "@/models/ProjectTag.entity";
+import { Tag } from "./Tag.entity";
+import { Language } from "./Language.entity";
+import { TextMaster } from "./TextMaster.entity";
 
 @Entity("projects")
 export class Project {
@@ -38,9 +39,12 @@ export class Project {
   @OneToMany(() => ProjectMember, (projectMember) => projectMember.project)
   readonly projectMembers?: ProjectMember[];
 
-  @OneToMany(() => ProjectText, (projectText) => projectText.project)
-  readonly projectTexts?: ProjectText[];
+  @OneToMany(() => TextMaster, (textMaster) => textMaster.project)
+  readonly textMasters?: TextMaster[];
 
-  @OneToMany(() => ProjectTag, (projectTag) => projectTag.project)
-  readonly projectTags?: ProjectTag[];
+  @OneToMany(() => Language, (language) => language.project)
+  readonly languages?: Language[];
+
+  @OneToMany(() => Tag, (tag) => tag.project)
+  readonly tags?: Tag[];
 }
