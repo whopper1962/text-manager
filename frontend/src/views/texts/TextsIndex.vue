@@ -1,21 +1,30 @@
 <template>
   <div>
-    <!-- <div class="card h-25 p-3 mb-4">
-      <div class="row g-3 mb-3">
-        <div class="col-md-6">
-          <label class="form-label">Text</label>
+    <div
+      class="w-100 p-6 mb-5 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+    >
+      <div class="grid md:grid-cols-2 md:gap-6">
+        <div class="relative z-0 w-full mb-6 group">
+          <label
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Search text</label
+          >
           <input
-            type="text"
-            class="form-control"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Some awesome text"
             v-model="inputedSeachQuery.text"
           />
         </div>
-        <div class="col-md-6">
-          <label class="form-label">Tags</label>
+        <div class="relative z-0 w-full mb-6 group">
+          <label
+            for="countries"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Tag</label
+          >
           <select
-            class="form-select"
-            aria-label="Default select example"
+            id="countries"
             role="button"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             v-model="inputedSeachQuery.tagId"
           >
             <option :value="''" selected>All</option>
@@ -25,10 +34,14 @@
           </select>
         </div>
       </div>
-      <button class="btn btn-success w-25" @click="fetchTexts()">
-        Get Texts
+      <button
+        type="button"
+        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        @click="fetchTexts()"
+      >
+        Search
       </button>
-    </div> -->
+    </div>
 
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
       <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
@@ -82,7 +95,7 @@
         </tbody>
       </table>
     </div>
-    <AppPagniation/>
+    <AppPagniation />
   </div>
 </template>
 
