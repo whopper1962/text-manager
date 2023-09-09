@@ -14,6 +14,6 @@ export const ApiGroupPath = {
   USERS: "/users",
   TEXTS: "/texts",
   LANGUAGES: "/languages",
-  TAGS: "/tags"
+  TAGS: "/tags",
 } as const;
 export type ApiGroupPath = (typeof ApiGroupPath)[keyof typeof ApiGroupPath];

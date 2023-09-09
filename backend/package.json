@@ -8,7 +8,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "typeorm": "typeorm-ts-node-commonjs -d ./src/database/appDataSource.ts",
     "migration:generate": "npm run typeorm migration:generate ./src/database/migrations/migration",
-    "migration:run": "npm run typeorm migration:run"
+    "migration:run": "npm run typeorm migration:run",
+    "format": "prettier --list-different --write \"./src/**/*.{ts,json,md}\""
   },
   "author": "",
   "license": "ISC",
@@ -18,6 +19,7 @@
     "@types/node": "^20.5.9",
     "@types/uuid": "^9.0.3",
     "nodemon": "^2.0.22",
+    "prettier": "^3.0.3",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.2.2"

@@ -4,7 +4,7 @@
     <div class="p-5 bg-gray-600 min-h-screen">
       <router-view></router-view>
     </div>
-    <AppFooter/>
+    <AppFooter />
   </div>
 </template>
 

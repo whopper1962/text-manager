@@ -275,7 +275,7 @@ const fetchTexts = async (): Promise<void> => {
   try {
     const trimedInputedSeachQuery = trimInputedSeachQuery(inputedSeachQuery);
     fetchedTexts.value = await textsApiService.fetchAll(
-      trimedInputedSeachQuery
+      trimedInputedSeachQuery,
     );
     router.replace({ query: trimedInputedSeachQuery });
   } catch {
@@ -288,7 +288,7 @@ const onClickLanguageDropdown = (languageId: string): void => {
 };
 
 const onClickComparisonMethodDropdown = (
-  selectedComparisonMethod: ComparisonMethod
+  selectedComparisonMethod: ComparisonMethod,
 ) => {
   inputedSeachQuery.comparisonMethod = selectedComparisonMethod;
 };
@@ -304,7 +304,7 @@ const getTagNameById = (tagId: string): string => {
 };
 
 const trimInputedSeachQuery = (
-  inputedSeachQueryToTrim: TextsIndexSearchQuery
+  inputedSeachQueryToTrim: TextsIndexSearchQuery,
 ): Partial<TextsIndexSearchQuery> => {
   return Object.fromEntries(
     Object.entries(inputedSeachQueryToTrim).filter(([key, value]) => {
@@ -312,7 +312,7 @@ const trimInputedSeachQuery = (
       if (key === "languageId" || key === "comparisonMethod")
         return inputedSeachQueryToTrim.keyword;
       return value !== "";
-    })
+    }),
   );
 };
 
@@ -377,7 +377,7 @@ onMounted(() => {
   Promise.all([initialTextSearch(), fetchLanguages(), fetchTags()]).catch(
     () => {
       alert("Error occured while fetching data!");
-    }
+    },
   );
 })();
 </script>

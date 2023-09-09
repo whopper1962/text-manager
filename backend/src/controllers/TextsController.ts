@@ -12,7 +12,10 @@ export class TextsController {
       // TODO: Get Project ID from session.
       const projectId = "289c2e46-4c5d-11ee-be56-0242ac120002";
       const { query } = request;
-      const texts = await new FetchTextsByProjectIdService().execute(projectId, query);
+      const texts = await new FetchTextsByProjectIdService().execute(
+        projectId,
+        query,
+      );
       response.json(texts);
     } catch (e) {
       next(e);

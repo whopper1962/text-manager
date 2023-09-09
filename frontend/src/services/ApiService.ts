@@ -1,4 +1,8 @@
-import Axios, { AxiosError, type AxiosResponse, type AxiosInstance } from "axios";
+import Axios, {
+  AxiosError,
+  type AxiosResponse,
+  type AxiosInstance,
+} from "axios";
 import type { ApiGroupPath } from "@/configs/api.config";
 import { onRequest } from "@/services/interceptors/onRequest";
 import { onResponse } from "@/services/interceptors/onResponse";

@@ -14,16 +14,15 @@ export class FetchTextsByProjectIdService {
   }
   async execute(
     projectId: string,
-    searchQuery: TextsIndexSearchQuery
+    searchQuery: TextsIndexSearchQuery,
   ): Promise<Text[]> {
-    const tagFilteredTextMasterIds = await this.getTagFilteredTextMasterIds(
-      searchQuery
-    );
+    const tagFilteredTextMasterIds =
+      await this.getTagFilteredTextMasterIds(searchQuery);
 
     const whereOptions = this.buildTextMasterWhereOptions(
       projectId,
       tagFilteredTextMasterIds,
-      searchQuery
+      searchQuery,
     );
 
     const fetchedTextIds = await this.textMasterRepository
@@ -66,7 +65,7 @@ export class FetchTextsByProjectIdService {
   }
 
   private async getTagFilteredTextMasterIds(
-    searchQuery: TextsIndexSearchQuery
+    searchQuery: TextsIndexSearchQuery,
   ): Promise<string[] | null> {
     const { tagIds } = searchQuery;
     if (!tagIds) return null;
@@ -86,7 +85,7 @@ export class FetchTextsByProjectIdService {
   private buildTextMasterWhereOptions(
     projectId: string,
     tagFilteredTextMasterIds: string[] | null,
-    searchQuery: TextsIndexSearchQuery
+    searchQuery: TextsIndexSearchQuery,
   ): FindOptionsWhere<TextMasterEntity> {
     if (Object.keys(searchQuery).length === 0)
       return {
@@ -96,9 +95,7 @@ export class FetchTextsByProjectIdService {
       };
 
     return {
-      ...(tagFilteredTextMasterIds
-        ? { id: In(tagFilteredTextMasterIds) }
-        : {}),
+      ...(tagFilteredTextMasterIds ? { id: In(tagFilteredTextMasterIds) } : {}),
       project: {
         id: projectId,
       },
@@ -108,7 +105,7 @@ export class FetchTextsByProjectIdService {
   }
 
   private buildTextContentWhereOption(
-    searchQuery: TextsIndexSearchQuery
+    searchQuery: TextsIndexSearchQuery,
   ): FindOptionsWhere<TextContentEntity> {
     if (!searchQuery.keyword) return {};
 
@@ -121,7 +118,7 @@ export class FetchTextsByProjectIdService {
   }
 
   private buidlContentComparisonQuery(
-    searchQuery: TextsIndexSearchQuery
+    searchQuery: TextsIndexSearchQuery,
   ): FindOptionsWhere<TextContentEntity> {
     switch (searchQuery.comparisonMethod) {
       case ComparisonMethod.CONTAINS: {
@@ -148,7 +145,7 @@ export class FetchTextsByProjectIdService {
   }
 
   private buildTextTagContentWhereOption(
-    searchQuery: TextsIndexSearchQuery
+    searchQuery: TextsIndexSearchQuery,
   ): FindOptionsWhere<TextTagEntity> {
     if (!searchQuery.tagIds) return {};
     return {

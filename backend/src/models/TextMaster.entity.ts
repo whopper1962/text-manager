@@ -20,7 +20,7 @@ export class TextMaster {
 
   @Column({
     name: "alias",
-    nullable: true
+    nullable: true,
   })
   alias!: string;
 
