@@ -4,12 +4,14 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
 import { Project } from "@/models/Project.entity";
 import { User } from "@/models/User.entity";
 import { MemberRole } from "@/types/projectMembers";
+import { Bookmark } from "./Bookmark.entity";
 
 @Entity("project_members")
 export class ProjectMember {
@@ -51,4 +53,7 @@ export class ProjectMember {
     referencedColumnName: "id",
   })
   member!: User;
+
+  @OneToMany(() => Bookmark, (bookmark) => bookmark.textMaster)
+  readonly bookmarks!: Bookmark[];
 }

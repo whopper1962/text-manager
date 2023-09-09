@@ -9,14 +9,20 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 import { TextTag } from "@/models/TextTag.entity";
-import { Language } from "./Language.entity";
 import { Project } from "./Project.entity";
 import { TextContent } from "./TextContent.entity";
+import { Bookmark } from "./Bookmark.entity";
 
 @Entity("text_masters")
 export class TextMaster {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
+
+  @Column({
+    name: "alias",
+    nullable: true
+  })
+  alias!: string;
 
   @CreateDateColumn({
     name: "created_at",
@@ -45,4 +51,7 @@ export class TextMaster {
 
   @OneToMany(() => TextContent, (textContent) => textContent.textMaster)
   readonly textContents!: TextContent[];
+
+  @OneToMany(() => Bookmark, (bookmark) => bookmark.textMaster)
+  readonly bookmarks!: Bookmark[];
 }
