@@ -4,7 +4,7 @@
       class="w-100 p-6 mb-5 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
     >
       <div class="grid md:grid-cols-2 md:gap-6">
-        <div class="relative z-0 w-full mb-6 group">
+        <div class="z-auto w-full mb-6 group">
           <label
             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >Search text</label
@@ -102,13 +102,13 @@
                 type="text"
                 id="search-dropdown"
                 class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-l-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
-                placeholder="Search Mockups, Logos, Design Templates..."
+                placeholder="Input text search keyword...."
                 v-model="inputedSeachQuery.keyword"
               />
             </div>
           </div>
         </div>
-        <div class="relative z-0 w-full mb-6 group">
+        <div class="z-auto mb-6 group">
           <label
             for="countries"
             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -140,7 +140,7 @@
 
           <div
             id="dropdownDefaultCheckbox"
-            class="z-10 hidden w-full bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
+            class="z-10 hidden w-2/5 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
           >
             <ul
               class="p-3 space-y-3 text-sm text-gray-700 dark:text-gray-200"
@@ -175,14 +175,14 @@
       </button>
       <button
         type="button"
-        class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800 ml-3"
+        class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800 md:ml-3 mt-3 md:mt-0"
         @click="clearSearchQuery()"
       >
         Clear
       </button>
     </div>
 
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <div class="z-0 overflow-x-auto shadow-md sm:rounded-lg">
       <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
         <thead
           class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
