@@ -1,9 +1,9 @@
 import { ApiGroupPath } from "@/configs/api.config";
-import type { Text } from "@/types/texts";
+import type { TextsIndexSearchQuery, Text } from "@/types/texts";
 import { ApiService } from "./ApiService";
 
 interface ITextsApiService {
-  fetchAll(): Promise<Text[]>;
+  fetchAll(query: TextsIndexSearchQuery): Promise<Text[]>;
 }
 
 class TextsApiService extends ApiService implements ITextsApiService {
@@ -11,8 +11,8 @@ class TextsApiService extends ApiService implements ITextsApiService {
     super(ApiGroupPath.TEXTS);
   }
 
-  async fetchAll(): Promise<Text[]> {
-    return await this.get<Text[]>("");
+  async fetchAll(query: Partial<TextsIndexSearchQuery>): Promise<Text[]> {
+    return await this.get<Text[]>("", query);
   }
 }
 

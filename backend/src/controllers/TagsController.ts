@@ -12,8 +12,6 @@ export class TagsController {
       // TODO: Get Project ID from session.
       const projectId = "289c2e46-4c5d-11ee-be56-0242ac120002";
       const Tags = await new FetchTagsByProjectIdService().execute(projectId);
-      console.log("=============FETCHED TagS: CONTROLLER=============");
-      console.debug(Tags);
       response.json(Tags);
     } catch (e) {
       next(e);

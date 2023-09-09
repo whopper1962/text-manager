@@ -11,7 +11,18 @@ export type Text = {
   updatedAt: Date;
 };
 
-export type IndexSearchQuery = {
-  text: string;
-  tagId: string;
+export type TextsIndexSearchQuery = {
+  keyword: string;
+  tagIds: string[];
+  languageId: string;
+  comparisonMethod: ComparisonMethod;
 };
+
+export const ComparisonMethod = {
+  CONTAINS: "CONTAINS",
+  EQUALS: "EQUALS",
+  NOT_CONTAINS: "NOT_CONTAINS",
+  NOT_EQUALS: "NOT_EQUAL",
+} as const;
+export type ComparisonMethod =
+  (typeof ComparisonMethod)[keyof typeof ComparisonMethod];

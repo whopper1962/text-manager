@@ -9,11 +9,104 @@
             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >Search text</label
           >
-          <input
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="Some awesome text"
-            v-model="inputedSeachQuery.text"
-          />
+          <div class="flex">
+            <button
+              id="dropdown-button"
+              data-dropdown-toggle="language-dropdown"
+              class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-l-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
+              type="button"
+            >
+              {{ getLanguageNameById(inputedSeachQuery.languageId) }}
+              <svg
+                class="w-2.5 h-2.5 ml-2.5"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 10 6"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="m1 1 4 4 4-4"
+                />
+              </svg>
+            </button>
+            <button
+              id="dropdown-button"
+              data-dropdown-toggle="comparison-method-dropdown"
+              class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
+              type="button"
+            >
+              {{ inputedSeachQuery.comparisonMethod }}
+              <svg
+                class="w-2.5 h-2.5 ml-2.5"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 10 6"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="m1 1 4 4 4-4"
+                />
+              </svg>
+            </button>
+            <div
+              id="language-dropdown"
+              class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
+            >
+              <ul
+                class="py-2 z-50 text-sm text-gray-700 dark:text-gray-200"
+                aria-labelledby="dropdown-button"
+              >
+                <li v-for="language in languages" :key="language.id">
+                  <button
+                    type="button"
+                    class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                    @click="onClickLanguageDropdown(language.id)"
+                  >
+                    {{ language.name }}
+                  </button>
+                </li>
+              </ul>
+            </div>
+            <div
+              id="comparison-method-dropdown"
+              class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700"
+            >
+              <ul
+                class="py-2 z-50 text-sm text-gray-700 dark:text-gray-200"
+                aria-labelledby="dropdown-button"
+              >
+                <li
+                  v-for="(method, index) in ComparisonMethod"
+                  :key="`method_${index}`"
+                >
+                  <button
+                    type="button"
+                    class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                    @click="onClickComparisonMethodDropdown(method)"
+                  >
+                    {{ method }}
+                  </button>
+                </li>
+              </ul>
+            </div>
+            <div class="relative w-full">
+              <input
+                type="text"
+                id="search-dropdown"
+                class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-l-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+                placeholder="Search Mockups, Logos, Design Templates..."
+                v-model="inputedSeachQuery.keyword"
+              />
+            </div>
+          </div>
         </div>
         <div class="relative z-0 w-full mb-6 group">
           <label
@@ -21,17 +114,56 @@
             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
             >Tag</label
           >
-          <select
-            id="countries"
-            role="button"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            v-model="inputedSeachQuery.tagId"
+
+          <button
+            id="dropdownCheckboxButton"
+            data-dropdown-toggle="dropdownDefaultCheckbox"
+            class="w-full focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center text-gray-900 bg-gray-100 border border-gray-300 focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600 hover:bg-gray-200"
+            type="button"
           >
-            <option :value="''" selected>All</option>
-            <option v-for="tag in tags" :key="tag.id" :value="tag.id">
-              {{ tag.name }}
-            </option>
-          </select>
+            <template v-if="inputedSeachQuery.tagIds.length === 0">
+              Select tags
+            </template>
+            <template v-else>
+              <span
+                class="mr-2"
+                v-for="(tagId, index) in inputedSeachQuery.tagIds"
+                :key="tagId"
+              >
+                {{ getTagNameById(tagId)
+                }}<span v-if="index !== inputedSeachQuery.tagIds.length - 1">
+                  ,</span
+                >
+              </span>
+            </template>
+          </button>
+
+          <div
+            id="dropdownDefaultCheckbox"
+            class="z-10 hidden w-full bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
+          >
+            <ul
+              class="p-3 space-y-3 text-sm text-gray-700 dark:text-gray-200"
+              aria-labelledby="dropdownCheckboxButton"
+            >
+              <li v-for="tag in tags" :key="tag.id">
+                <div class="flex items-center">
+                  <input
+                    :id="`checkbox-item-${tag.id}`"
+                    type="checkbox"
+                    :value="tag.id"
+                    v-model="inputedSeachQuery.tagIds"
+                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                  />
+                  <label
+                    :for="`checkbox-item-${tag.id}`"
+                    class="ml-2 w-full cursor-pointer text-sm font-medium text-gray-900 dark:text-gray-300"
+                    >{{ tag.name }}</label
+                  >
+                </div>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
       <button
@@ -40,6 +172,13 @@
         @click="fetchTexts()"
       >
         Search
+      </button>
+      <button
+        type="button"
+        class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800 ml-3"
+        @click="clearSearchQuery()"
+      >
+        Clear
       </button>
     </div>
 
@@ -100,38 +239,113 @@
 </template>
 
 <script setup lang="ts">
-import type { IndexSearchQuery, Text } from "@/types/texts";
+import { onMounted, reactive, ref } from "vue";
+import type { TextsIndexSearchQuery, Text } from "@/types/texts";
+import { ComparisonMethod } from "@/types/texts";
 import type { Language } from "@/types/languages";
 import { textsApiService } from "@/services/TextsApiService";
 import { languagesApiService } from "@/services/LanguagesApiService";
 import { tagsApiService } from "@/services/TagsApiService";
 import { useFormatHelper } from "@/helpers/formatHelper";
-import { reactive, ref } from "vue";
 import { Tag } from "@/types/tags";
 import AppPagniation from "@/components/AppPagniation.vue";
+import { useRoute, useRouter } from "vue-router";
+import { initFlowbite } from "flowbite";
 
 const fetchedTexts = ref<Text[]>([]);
 const languages = ref<Language[]>([]);
 const tags = ref<Tag[]>([]);
 
-const inputedSeachQuery = reactive<IndexSearchQuery>({
-  text: "",
-  tagId: "",
+const initialSearchQuery = {
+  keyword: "",
+  tagIds: [],
+  languageId: "",
+  comparisonMethod: ComparisonMethod.CONTAINS,
+};
+
+const inputedSeachQuery = reactive<TextsIndexSearchQuery>({
+  ...initialSearchQuery,
 });
 
 const { formatDateToYyyyMmDdHhMmSs } = useFormatHelper();
+const router = useRouter();
+const route = useRoute();
 
 const fetchTexts = async (): Promise<void> => {
   try {
-    fetchedTexts.value = await textsApiService.fetchAll();
+    const trimedInputedSeachQuery = trimInputedSeachQuery(inputedSeachQuery);
+    fetchedTexts.value = await textsApiService.fetchAll(
+      trimedInputedSeachQuery
+    );
+    router.replace({ query: trimedInputedSeachQuery });
   } catch {
     throw new Error();
   }
 };
 
+const onClickLanguageDropdown = (languageId: string): void => {
+  inputedSeachQuery.languageId = languageId;
+};
+
+const onClickComparisonMethodDropdown = (
+  selectedComparisonMethod: ComparisonMethod
+) => {
+  inputedSeachQuery.comparisonMethod = selectedComparisonMethod;
+};
+
+const getLanguageNameById = (languageId: string): string => {
+  return (
+    languages.value.find((language) => language.id === languageId)?.name || ""
+  );
+};
+
+const getTagNameById = (tagId: string): string => {
+  return tags.value.find((tag) => tag.id === tagId)?.name || "";
+};
+
+const trimInputedSeachQuery = (
+  inputedSeachQueryToTrim: TextsIndexSearchQuery
+): Partial<TextsIndexSearchQuery> => {
+  return Object.fromEntries(
+    Object.entries(inputedSeachQueryToTrim).filter(([key, value]) => {
+      if (key === "tagIds" && value.length > 0) return true;
+      if (key === "languageId" || key === "comparisonMethod")
+        return inputedSeachQueryToTrim.keyword;
+      return value !== "";
+    })
+  );
+};
+
+const clearSearchQuery = (): void => {
+  Object.assign(inputedSeachQuery, initialSearchQuery);
+  inputedSeachQuery.languageId = languages.value[0].id;
+};
+
+const setInitialSearchQuery = (): void => {
+  Object.keys(route.query).forEach((queryKey: string): void => {
+    if (queryKey === "tagIds" && typeof route.query[queryKey] === "string") {
+      inputedSeachQuery[queryKey as keyof TextsIndexSearchQuery] = [
+        route.query[queryKey],
+      ] as any;
+    } else {
+      inputedSeachQuery[queryKey as keyof TextsIndexSearchQuery] = route.query[
+        queryKey
+      ] as any;
+    }
+  });
+  inputedSeachQuery.languageId = languages.value[0]?.id;
+};
+
+const initialTextSearch = (): void => {
+  setInitialSearchQuery();
+  fetchTexts();
+};
+
 const fetchLanguages = async (): Promise<void> => {
   try {
     languages.value = await languagesApiService.fetchAll();
+    if (inputedSeachQuery.languageId) return;
+    inputedSeachQuery.languageId = languages.value[0].id || "";
   } catch {
     throw new Error();
   }
@@ -146,15 +360,25 @@ const fetchTags = async (): Promise<void> => {
 };
 
 const onClickTag = (tagId: string): void => {
-  console.log("=============CLICKED TAG==============");
-  console.debug(tagId);
-  inputedSeachQuery.tagId = tagId;
+  console.debug("Clicked:", tagId);
+  // router.push({
+  //   name: "TagsShow",
+  //   params: {
+  //     id: tagId,
+  //   },
+  // });
 };
 
+onMounted(() => {
+  initFlowbite();
+});
+
 (() => {
-  Promise.all([fetchTexts(), fetchLanguages(), fetchTags()]).catch(() => {
-    alert("Error occured while fetching data!");
-  });
+  Promise.all([initialTextSearch(), fetchLanguages(), fetchTags()]).catch(
+    () => {
+      alert("Error occured while fetching data!");
+    }
+  );
 })();
 </script>
 

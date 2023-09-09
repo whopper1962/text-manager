@@ -12,8 +12,6 @@ export class LanguagesController {
       // TODO: Get Project ID from session.
       const projectId = "289c2e46-4c5d-11ee-be56-0242ac120002";
       const languages = await new FetchLanguagesByProjectIdService().execute(projectId);
-      console.log("=============FETCHED LANGUAGES: CONTROLLER=============");
-      console.debug(languages);
       response.json(languages);
     } catch (e) {
       next(e);
