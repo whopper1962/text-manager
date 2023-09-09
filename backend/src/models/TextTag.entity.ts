@@ -29,6 +29,7 @@ export class TextTag {
   })
   readonly updatedAt!: Date;
 
+  // TODO: Validation unique text_master_id+tag_id
   @ManyToOne(() => TextMaster, (textMaster) => textMaster.textTags)
   @JoinColumn({
     name: "text_master_id",

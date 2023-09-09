@@ -1,5 +1,5 @@
-import { TextsIndexSearchQuery, Text } from "@/types/texts";
-import { FindOptionsWhere, In, Like, Repository } from "typeorm";
+import { TextsIndexSearchQuery, Text, ComparisonMethod } from "@/types/texts";
+import { Equal, FindOptionsWhere, In, Like, Not, Repository } from "typeorm";
 import { TextMaster as TextMasterEntity } from "@/models/TextMaster.entity";
 import { TextContent as TextContentEntity } from "@/models/TextContent.entity";
 import { TextTag as TextTagEntity } from "@/models/TextTag.entity";
@@ -16,10 +16,16 @@ export class FetchTextsByProjectIdService {
     projectId: string,
     searchQuery: TextsIndexSearchQuery
   ): Promise<Text[]> {
-    const whereOptions = this.buildTextMasterWhereOptions(
-      projectId,
+    const tagFilteredTextMasterIds = await this.getTagFilteredTextMasterIds(
       searchQuery
     );
+
+    const whereOptions = this.buildTextMasterWhereOptions(
+      projectId,
+      tagFilteredTextMasterIds,
+      searchQuery
+    );
+
     const fetchedTextIds = await this.textMasterRepository
       .find({
         where: whereOptions,
@@ -59,8 +65,27 @@ export class FetchTextsByProjectIdService {
     });
   }
 
+  private async getTagFilteredTextMasterIds(
+    searchQuery: TextsIndexSearchQuery
+  ): Promise<string[] | null> {
+    const { tagIds } = searchQuery;
+    if (!tagIds) return null;
+
+    return await this.textMasterRepository
+      .createQueryBuilder("textMaster")
+      .innerJoin("textMaster.textTags", "textTag")
+      .where("textTag.tag_id IN (:...tagIds)", { tagIds })
+      .groupBy("textMaster.id")
+      .having("COUNT(textTag.tag_id) = :tagCount", { tagCount: tagIds.length })
+      .getMany()
+      .then((rawData) => {
+        return rawData.map((data) => data.id);
+      });
+  }
+
   private buildTextMasterWhereOptions(
     projectId: string,
+    tagFilteredTextMasterIds: string[] | null,
     searchQuery: TextsIndexSearchQuery
   ): FindOptionsWhere<TextMasterEntity> {
     if (Object.keys(searchQuery).length === 0)
@@ -71,6 +96,9 @@ export class FetchTextsByProjectIdService {
       };
 
     return {
+      ...(tagFilteredTextMasterIds
+        ? { id: In(tagFilteredTextMasterIds) }
+        : {}),
       project: {
         id: projectId,
       },
@@ -83,12 +111,40 @@ export class FetchTextsByProjectIdService {
     searchQuery: TextsIndexSearchQuery
   ): FindOptionsWhere<TextContentEntity> {
     if (!searchQuery.keyword) return {};
+
     return {
       language: {
         id: searchQuery.languageId,
       },
-      content: Like(`%${searchQuery.keyword}%`),
+      ...this.buidlContentComparisonQuery(searchQuery),
     };
+  }
+
+  private buidlContentComparisonQuery(
+    searchQuery: TextsIndexSearchQuery
+  ): FindOptionsWhere<TextContentEntity> {
+    switch (searchQuery.comparisonMethod) {
+      case ComparisonMethod.CONTAINS: {
+        return {
+          content: Like(`%${searchQuery.keyword}%`),
+        };
+      }
+      case ComparisonMethod.EQUALS: {
+        return {
+          content: Equal(searchQuery.keyword),
+        };
+      }
+      case ComparisonMethod.NOT_CONTAINS: {
+        return {
+          content: Not(Like(`%${searchQuery.keyword}%`)),
+        };
+      }
+      case ComparisonMethod.NOT_EQUALS: {
+        return {
+          content: Not(Equal(searchQuery.keyword)),
+        };
+      }
+    }
   }
 
   private buildTextTagContentWhereOption(
