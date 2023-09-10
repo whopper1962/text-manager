@@ -169,14 +169,14 @@
       <button
         type="button"
         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-        @click="fetchTexts()"
+        @click="onClickSearchButton()"
       >
         Search
       </button>
       <button
         type="button"
         class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800 md:ml-3 mt-3 md:mt-0"
-        @click="clearSearchQuery()"
+        @click="onClickClearButton()"
       >
         Clear
       </button>
@@ -251,6 +251,7 @@ import { Tag } from "@/types/tags";
 import AppPagniation from "@/components/AppPagniation.vue";
 import { useRoute, useRouter } from "vue-router";
 import { initFlowbite } from "flowbite";
+import { useToastHelper } from "@/helpers/toastHelper";
 
 const fetchedTexts = ref<Text[]>([]);
 const languages = ref<Language[]>([]);
@@ -268,8 +269,17 @@ const inputedSeachQuery = reactive<TextsIndexSearchQuery>({
 });
 
 const { formatDateToYyyyMmDdHhMmSs } = useFormatHelper();
+const { showErrorToast } = useToastHelper();
 const router = useRouter();
 const route = useRoute();
+
+const onClickSearchButton = async (): Promise<void> => {
+  try {
+    await fetchTexts();
+  } catch {
+    showErrorToast();
+  }
+};
 
 const fetchTexts = async (): Promise<void> => {
   try {
@@ -316,7 +326,8 @@ const trimInputedSeachQuery = (
   );
 };
 
-const clearSearchQuery = (): void => {
+const onClickClearButton = (): void => {
+  // Clear search query
   Object.assign(inputedSeachQuery, initialSearchQuery);
   inputedSeachQuery.languageId = languages.value[0].id;
 };
@@ -336,9 +347,13 @@ const setInitialSearchQuery = (): void => {
   inputedSeachQuery.languageId = languages.value[0]?.id;
 };
 
-const initialTextSearch = (): void => {
-  setInitialSearchQuery();
-  fetchTexts();
+const initialTextSearch = async (): Promise<void> => {
+  try {
+    setInitialSearchQuery();
+    await fetchTexts();
+  } catch {
+    throw new Error();
+  }
 };
 
 const fetchLanguages = async (): Promise<void> => {
@@ -376,7 +391,7 @@ onMounted(() => {
 (() => {
   Promise.all([initialTextSearch(), fetchLanguages(), fetchTags()]).catch(
     () => {
-      alert("Error occured while fetching data!");
+      showErrorToast();
     },
   );
 })();
