@@ -101,6 +101,7 @@
               <input
                 type="text"
                 id="search-dropdown"
+                autocomplete="off"
                 class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-r-lg border-l-gray-50 border-l-2 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-l-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
                 placeholder="Input text search keyword...."
                 v-model="inputedSeachQuery.keyword"
@@ -188,6 +189,17 @@
           class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
         >
           <tr>
+            <th scope="col" class="p-4">
+              <div class="flex items-center">
+                <input
+                  id="checkbox-all-search"
+                  type="checkbox"
+                  class="w-4 h-4 cursor-pointer text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  v-model="checkBoxForEntireAllTexts"
+                  @change="onChangeCheckboxForAll()"
+                />
+              </div>
+            </th>
             <th
               scope="col"
               class="px-6 py-3"
@@ -207,6 +219,16 @@
             v-for="fetchedText in fetchedTexts"
             :key="fetchedText.id"
           >
+            <td class="w-4 p-4">
+              <div class="flex items-center">
+                <input
+                  :id="`checkbox-table-search-${fetchedText.id}`"
+                  type="checkbox"
+                  class="w-4 h-4 cursor-pointer text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  v-model="textMasterCheckBoxes[fetchedText.id]"
+                />
+              </div>
+            </td>
             <td
               class="px-3 py-2 min-w-max"
               v-for="language in languages"
@@ -256,6 +278,8 @@ import { useToastHelper } from "@/helpers/toastHelper";
 const fetchedTexts = ref<Text[]>([]);
 const languages = ref<Language[]>([]);
 const tags = ref<Tag[]>([]);
+const textMasterCheckBoxes = reactive<Record<string, boolean>>({});
+const checkBoxForEntireAllTexts = ref<boolean>(false);
 
 const initialSearchQuery = {
   keyword: "",
@@ -287,10 +311,24 @@ const fetchTexts = async (): Promise<void> => {
     fetchedTexts.value = await textsApiService.fetchAll(
       trimedInputedSeachQuery,
     );
+    initializeCheckbox();
     router.replace({ query: trimedInputedSeachQuery });
   } catch {
     throw new Error();
   }
+};
+
+const initializeCheckbox = (): void => {
+  fetchedTexts.value.forEach((text) => {
+    textMasterCheckBoxes[text.id] = false;
+  });
+  checkBoxForEntireAllTexts.value = false;
+};
+
+const onChangeCheckboxForAll = (): void => {
+  Object.keys(textMasterCheckBoxes).forEach((textMasterId) => {
+    textMasterCheckBoxes[textMasterId] = checkBoxForEntireAllTexts.value;
+  });
 };
 
 const onClickLanguageDropdown = (languageId: string): void => {
