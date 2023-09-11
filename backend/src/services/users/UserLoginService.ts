@@ -3,7 +3,7 @@ import { Repository } from "typeorm";
 import { User as UserEntity } from "@/models/User.entity";
 import { appDataSource } from "@/database/appDataSource";
 
-export class FetchMembersService {
+export class UserLoginService {
   private userRepository!: Repository<UserEntity>;
 
   constructor() {

@@ -5,8 +5,13 @@ import { LanguagesController } from "@/controllers/LanguagesController";
 import { TagsController } from "@/controllers/TagsController";
 import { ProjectMembersController } from "./controllers/ProjectMembersController";
 import { ProjectsController } from "./controllers/ProjectsController";
+import { AuthsController } from "./controllers/AuthsController";
 
 export const router: Router = Router();
+
+// auth
+router.post("/login", AuthsController.login);
+router.post("/signup", AuthsController.signup);
 
 // users
 router.get("/users", UsersController.fetchAll);

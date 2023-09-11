@@ -17,5 +17,7 @@ export const ApiGroupPath = {
   TAGS: "/tags",
   PROJECTS: "/projects",
   PROJECT_MEMBES: "/project_members",
+  LOGIN: "/login",
+  SIGNUP: "/signup",
 } as const;
 export type ApiGroupPath = (typeof ApiGroupPath)[keyof typeof ApiGroupPath];
