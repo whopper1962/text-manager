@@ -10,9 +10,7 @@ export class CreateProjectService {
     this.projectRepository = appDataSource.getRepository(Project);
   }
 
-  async execute(
-    createProjectPayload: CreateProjectPayload,
-  ): Promise<void> {
+  async execute(createProjectPayload: CreateProjectPayload): Promise<void> {
     await this.projectRepository.save(createProjectPayload);
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="w-100 pt-3">
+  <div class="flex flex-col space-y-4 items-center justify-center pt-5">
     <nav aria-label="Page navigation example">
       <ul class="flex items-center -space-x-px h-10 text-base">
         <li>

@@ -185,7 +185,9 @@
 
     <template v-if="fetchedTexts.length > 0">
       <div class="z-0 overflow-x-auto shadow-md sm:rounded-lg">
-        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <table
+          class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
+        >
           <thead
             class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
           >
@@ -260,7 +262,7 @@
       <AppPagniation />
     </template>
     <template v-else>
-      <TextNotFound/>
+      <TextNotFound />
     </template>
   </div>
 </template>
@@ -280,6 +282,7 @@ import { useRoute, useRouter } from "vue-router";
 import { initFlowbite } from "flowbite";
 import { useToastHelper } from "@/helpers/toastHelper";
 import TextNotFound from "@/components/TextsIndex/TextNotFound.vue";
+import { projectsApiService } from "@/services/ProjectsApiService";
 
 const fetchedTexts = ref<Text[]>([]);
 const languages = ref<Language[]>([]);
@@ -413,6 +416,7 @@ const fetchLanguages = async (): Promise<void> => {
 const fetchTags = async (): Promise<void> => {
   try {
     tags.value = await tagsApiService.fetchAll();
+    await projectsApiService.fetchAll();
   } catch {
     throw new Error();
   }
