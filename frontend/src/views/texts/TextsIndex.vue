@@ -183,80 +183,85 @@
       </button>
     </div>
 
-    <div class="z-0 overflow-x-auto shadow-md sm:rounded-lg">
-      <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-        <thead
-          class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
-        >
-          <tr>
-            <th scope="col" class="p-4">
-              <div class="flex items-center">
-                <input
-                  id="checkbox-all-search"
-                  type="checkbox"
-                  class="w-4 h-4 cursor-pointer text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  v-model="checkBoxForEntireAllTexts"
-                  @change="onChangeCheckboxForAll()"
-                />
-              </div>
-            </th>
-            <th
-              scope="col"
-              class="px-6 py-3"
-              v-for="language in languages"
-              :key="language.id"
-            >
-              {{ language.name }}
-            </th>
-            <th scope="col" class="px-6 py-3">Tags</th>
-            <th scope="col" class="px-6 py-3">Created at</th>
-            <th scope="col" class="px-6 py-3">Updated at</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 h-[70px]"
-            v-for="fetchedText in fetchedTexts"
-            :key="fetchedText.id"
+    <template v-if="fetchedTexts.length > 0">
+      <div class="z-0 overflow-x-auto shadow-md sm:rounded-lg">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+          <thead
+            class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
           >
-            <td class="w-4 p-4">
-              <div class="flex items-center">
-                <input
-                  :id="`checkbox-table-search-${fetchedText.id}`"
-                  type="checkbox"
-                  class="w-4 h-4 cursor-pointer text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                  v-model="textMasterCheckBoxes[fetchedText.id]"
-                />
-              </div>
-            </td>
-            <td
-              class="px-3 py-2 min-w-max"
-              v-for="language in languages"
-              :key="language.id"
-            >
-              {{ fetchedText.text[language.id] }}
-            </td>
-            <td class="px-3 py-2">
-              <button
-                class="text-white bg-purple-700 hover:bg-purple-800 min-w-max focus:outline-none focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm px-5 py-2.5 m-1 text-center dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 ml-2"
-                v-for="tag in fetchedText.tags"
-                :key="tag.id"
-                @click="onClickTag(tag.id)"
+            <tr>
+              <th scope="col" class="p-4">
+                <div class="flex items-center">
+                  <input
+                    id="checkbox-all-search"
+                    type="checkbox"
+                    class="w-4 h-4 cursor-pointer text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    v-model="checkBoxForEntireAllTexts"
+                    @change="onChangeCheckboxForAll()"
+                  />
+                </div>
+              </th>
+              <th
+                scope="col"
+                class="px-6 py-3"
+                v-for="language in languages"
+                :key="language.id"
               >
-                {{ tag.name }}
-              </button>
-            </td>
-            <td class="px-3 py-2">
-              {{ formatDateToYyyyMmDdHhMmSs(fetchedText.createdAt) }}
-            </td>
-            <td class="px-3 py-2">
-              {{ formatDateToYyyyMmDdHhMmSs(fetchedText.updatedAt) }}
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <AppPagniation />
+                {{ language.name }}
+              </th>
+              <th scope="col" class="px-6 py-3">Tags</th>
+              <th scope="col" class="px-6 py-3">Created at</th>
+              <th scope="col" class="px-6 py-3">Updated at</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 h-[70px]"
+              v-for="fetchedText in fetchedTexts"
+              :key="fetchedText.id"
+            >
+              <td class="w-4 p-4">
+                <div class="flex items-center">
+                  <input
+                    :id="`checkbox-table-search-${fetchedText.id}`"
+                    type="checkbox"
+                    class="w-4 h-4 cursor-pointer text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    v-model="textMasterCheckBoxes[fetchedText.id]"
+                  />
+                </div>
+              </td>
+              <td
+                class="px-3 py-2 min-w-max"
+                v-for="language in languages"
+                :key="language.id"
+              >
+                {{ fetchedText.text[language.id] }}
+              </td>
+              <td class="px-3 py-2">
+                <button
+                  class="text-white bg-purple-700 hover:bg-purple-800 min-w-max focus:outline-none focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm px-5 py-2.5 m-1 text-center dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 ml-2"
+                  v-for="tag in fetchedText.tags"
+                  :key="tag.id"
+                  @click="onClickTag(tag.id)"
+                >
+                  {{ tag.name }}
+                </button>
+              </td>
+              <td class="px-3 py-2">
+                {{ formatDateToYyyyMmDdHhMmSs(fetchedText.createdAt) }}
+              </td>
+              <td class="px-3 py-2">
+                {{ formatDateToYyyyMmDdHhMmSs(fetchedText.updatedAt) }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <AppPagniation />
+    </template>
+    <template v-else>
+      <TextNotFound/>
+    </template>
   </div>
 </template>
 
@@ -274,6 +279,7 @@ import AppPagniation from "@/components/AppPagniation.vue";
 import { useRoute, useRouter } from "vue-router";
 import { initFlowbite } from "flowbite";
 import { useToastHelper } from "@/helpers/toastHelper";
+import TextNotFound from "@/components/TextsIndex/TextNotFound.vue";
 
 const fetchedTexts = ref<Text[]>([]);
 const languages = ref<Language[]>([]);
