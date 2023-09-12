@@ -27,6 +27,7 @@
                 type="text"
                 class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 placeholder=" "
+                v-model="inputedUserInfo.name"
               />
               <label
                 for="floating_email"
@@ -39,6 +40,7 @@
                 type="text"
                 class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 placeholder=" "
+                v-model="inputedUserInfo.email"
               />
               <label
                 for="floating_email"
@@ -52,6 +54,7 @@
                 autocomplete="off"
                 class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 placeholder=" "
+                v-model="inputedUserInfo.password"
               />
               <label
                 for="floating_email"
@@ -65,6 +68,7 @@
                 autocomplete="off"
                 class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 placeholder=" "
+                v-model="passwordConfirmation"
               />
               <label
                 for="floating_email"
@@ -98,11 +102,31 @@
 
 <script setup lang="ts">
 import { useToastHelper } from "@/helpers/toastHelper";
+import { authsApiServiceService } from "@/services/AuthsApiService";
+import { SignupPayload } from "@/types/auths";
+import { reactive, ref } from "vue";
+import { useRouter } from "vue-router";
 
-const { showErrorToast } = useToastHelper();
+const { showErrorToast, showSuccessToast } = useToastHelper();
+const router = useRouter();
+
+const inputedUserInfo = reactive<SignupPayload>({
+  name: "",
+  email: "",
+  password: "",
+});
+
+const passwordConfirmation = ref<string>("");
 
 const onClickSignupButton = async (): Promise<void> => {
   try {
+    await authsApiServiceService.signup(inputedUserInfo);
+    showSuccessToast(
+      `Your account has been successfully created. Welcome, ${inputedUserInfo.name}!`,
+    );
+    router.push({
+      name: "TextsIndex",
+    });
   } catch {
     showErrorToast();
   }

@@ -1,4 +1,5 @@
 import {
+  BeforeInsert,
   Column,
   CreateDateColumn,
   Entity,
@@ -7,6 +8,7 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 import { ProjectMember } from "@/models/ProjectMember.entity";
+import * as bcrypt from "bcrypt";
 
 @Entity("users")
 export class User {
@@ -14,14 +16,10 @@ export class User {
   id!: string;
 
   @Column({
-    name: "last_name",
+    name: "name",
+    nullable: true,
   })
-  lastName!: string;
-
-  @Column({
-    name: "first_name",
-  })
-  firstName!: string;
+  name!: string;
 
   @Column({
     name: "password",
@@ -30,8 +28,15 @@ export class User {
 
   @Column({
     name: "email",
+    unique: true,
   })
   email!: string;
+
+  @Column({
+    name: "profile_image",
+    nullable: true,
+  })
+  profileImage!: string;
 
   @CreateDateColumn({
     name: "created_at",
@@ -50,4 +55,10 @@ export class User {
 
   @OneToMany(() => ProjectMember, (projectMember) => projectMember.member)
   readonly projectMembers!: ProjectMember[];
+
+  @BeforeInsert()
+  async hashPassword() {
+    console.error("HASH PASSWORD");
+    this.password = await bcrypt.hash(this.password, 10);
+  }
 }

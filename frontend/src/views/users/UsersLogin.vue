@@ -18,6 +18,7 @@
                 type="text"
                 class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 placeholder=" "
+                v-model="inputedUserInfo.email"
               />
               <label
                 for="floating_email"
@@ -31,6 +32,7 @@
                 autocomplete="off"
                 class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 placeholder=" "
+                v-model="inputedUserInfo.password"
               />
               <label
                 for="floating_email"
@@ -87,13 +89,28 @@
 
 <script setup lang="ts">
 import { useToastHelper } from "@/helpers/toastHelper";
+import { authsApiServiceService } from "@/services/AuthsApiService";
+import { LoginPayload } from "@/types/auths";
+import { reactive } from "vue";
+import { useRouter } from "vue-router";
 
-const { showErrorToast } = useToastHelper();
+const { showErrorToast, showSuccessToast } = useToastHelper();
+const router = useRouter();
+
+const inputedUserInfo = reactive<LoginPayload>({
+  email: "",
+  password: "",
+});
 
 const onClickLoginButton = async (): Promise<void> => {
   try {
+    const loggedInUser = await authsApiServiceService.login(inputedUserInfo);
+    showSuccessToast(`Welcome back, ${loggedInUser.name}!`);
+    router.push({
+      name: "TextsIndex",
+    });
   } catch {
-    showErrorToast("Login failed.");
+    showErrorToast("Login failed. Please check your input.");
   }
 };
 </script>

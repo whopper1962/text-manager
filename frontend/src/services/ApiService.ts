@@ -30,9 +30,9 @@ export function isApiClientError(error: unknown): error is AxiosError {
 export class ApiService implements IApiService {
   private axios: AxiosInstance;
 
-  constructor(path: ApiGroupPath) {
+  constructor(path?: ApiGroupPath) {
     this.axios = Axios.create({
-      baseURL: import.meta.env.VITE_API_BASE_URL + path,
+      baseURL: `${import.meta.env.VITE_API_BASE_URL}${path ? path : ""}`,
       responseType: "json" as const,
       headers: {},
       timeout: 30000,
