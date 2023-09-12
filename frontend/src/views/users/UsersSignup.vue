@@ -6,18 +6,37 @@
       <div
         class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700"
       >
-        <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+        <form @submit.prevent class="p-6 space-y-4 md:space-y-6 sm:p-8">
           <h1
             class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white"
           >
-            Sign in to your account
+            Create an account
           </h1>
           <div class="space-y-4 md:space-y-6">
+            <div
+              class="flex flex-col space-y-4 items-center justify-center pt-4"
+            >
+              <img
+                class="rounded-full w-28"
+                src="default_icon2.svg"
+                alt="image description"
+              />
+            </div>
             <div class="relative z-0 w-full mb-6 group">
               <input
                 type="text"
-                name="floating_email"
-                id="floating_email"
+                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                placeholder=" "
+              />
+              <label
+                for="floating_email"
+                class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                >Nickname</label
+              >
+            </div>
+            <div class="relative z-0 w-full mb-6 group">
+              <input
+                type="text"
                 class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 placeholder=" "
               />
@@ -30,8 +49,7 @@
             <div class="relative z-0 w-full mb-6 group">
               <input
                 type="password"
-                name="floating_email"
-                id="floating_email"
+                autocomplete="off"
                 class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 placeholder=" "
               />
@@ -41,48 +59,38 @@
                 >Password</label
               >
             </div>
-            <div class="flex items-center justify-between">
-              <div class="flex items-start">
-                <div class="flex items-center h-5">
-                  <input
-                    id="remember"
-                    type="checkbox"
-                    class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                  />
-                </div>
-                <div class="ml-3 text-sm">
-                  <label
-                    for="remember"
-                    class="cursor-pointer text-gray-500 dark:text-gray-300"
-                    >Remember me</label
-                  >
-                </div>
-              </div>
-              <a
-                href="#"
-                class="text-sm font-medium text-gray-600 hover:underline dark:text-gray-500"
-                >Forgot password?</a
+            <div class="relative z-0 w-full mb-6 group">
+              <input
+                type="password"
+                autocomplete="off"
+                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                placeholder=" "
+              />
+              <label
+                for="floating_email"
+                class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                >Password Confirmation</label
               >
             </div>
             <button
               type="button"
               class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-              @click="onClickLoginButton()"
+              @click="onClickSignupButton()"
             >
-              Sign in
+              Sign up!
             </button>
             <p class="text-sm font-light text-gray-500 dark:text-gray-400">
-              Don’t have an account yet?
+              Already have an account?
               <router-link
                 :to="{
-                  name: 'UsersSignup',
+                  name: 'UsersLogin',
                 }"
                 class="font-medium text-primary-600 hover:underline dark:text-primary-500"
-                >Sign up</router-link
+                >Login here</router-link
               >
             </p>
           </div>
-        </div>
+        </form>
       </div>
     </div>
   </section>
@@ -93,10 +101,10 @@ import { useToastHelper } from "@/helpers/toastHelper";
 
 const { showErrorToast } = useToastHelper();
 
-const onClickLoginButton = async (): Promise<void> => {
+const onClickSignupButton = async (): Promise<void> => {
   try {
   } catch {
-    showErrorToast("Login failed.");
+    showErrorToast();
   }
 };
 </script>
