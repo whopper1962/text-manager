@@ -28,6 +28,11 @@ export class User {
   })
   password!: string;
 
+  @Column({
+    name: "email",
+  })
+  email!: string;
+
   @CreateDateColumn({
     name: "created_at",
     type: "timestamp",
