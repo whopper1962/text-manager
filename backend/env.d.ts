@@ -9,6 +9,7 @@ declare module "process" {
         readonly DB_DATABASE: string;
         readonly DB_USERNAME: string;
         readonly DB_PASSWORD: string;
+        readonly JWT_SECRET_KEY: string;
       }
     }
   }

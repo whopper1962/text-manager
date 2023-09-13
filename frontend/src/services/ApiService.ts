@@ -33,6 +33,7 @@ export class ApiService implements IApiService {
   constructor(path?: ApiGroupPath) {
     this.axios = Axios.create({
       baseURL: `${import.meta.env.VITE_API_BASE_URL}${path ? path : ""}`,
+      withCredentials: true,
       responseType: "json" as const,
       headers: {},
       timeout: 30000,

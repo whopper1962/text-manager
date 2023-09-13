@@ -1,6 +1,7 @@
 import express, { type Application } from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
+import cookieParser from "cookie-parser";
 import { router } from "@/router";
 import { generalConfig } from "@/configs/general.config";
 import { appDataSource } from "@/database/appDataSource";
@@ -17,6 +18,7 @@ export class Server {
 
   private initializeMiddlewares() {
     this.app.use(bodyParser.json());
+    this.app.use(cookieParser());
     this.app.use(cors(generalConfig.cors));
   }
 

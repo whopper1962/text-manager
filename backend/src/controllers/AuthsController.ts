@@ -12,8 +12,14 @@ export class AuthsController {
   ): Promise<void> {
     try {
       const { body } = request;
-      const members = await new UserLoginService().execute(body);
-      response.json(members);
+
+      const { loggingInUser, token } = await new UserLoginService().execute(body);
+
+      response.cookie("token", token, {
+        httpOnly: true,
+      });
+
+      response.json(loggingInUser);
     } catch (e) {
       next(e);
     }

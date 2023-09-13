@@ -6,6 +6,7 @@ import { TagsController } from "@/controllers/TagsController";
 import { ProjectMembersController } from "./controllers/ProjectMembersController";
 import { ProjectsController } from "./controllers/ProjectsController";
 import { AuthsController } from "./controllers/AuthsController";
+import { authenticationCheck } from "./middlewares/authenticationCheck";
 
 export const router: Router = Router();
 
@@ -17,7 +18,7 @@ router.post("/signup", AuthsController.signup);
 router.get("/users", UsersController.fetchAll);
 
 // texts
-router.get("/texts", TextsController.fetchAll);
+router.get("/texts", authenticationCheck, TextsController.fetchAll);
 
 // languages
 router.get("/languages", LanguagesController.fetchAll);

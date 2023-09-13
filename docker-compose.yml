@@ -39,6 +39,7 @@ services:
       DB_DATABASE: "awesome_app_db"
       DB_USERNAME: "postgres"
       DB_PASSWORD: "password"
+      JWT_SECRET_KEY: "abc123def456"
 
   database:
     image: postgres:15
