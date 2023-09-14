@@ -1,4 +1,5 @@
 import { isAxiosError, type AxiosError } from "axios";
+import { router } from '@/router';
 import { useToastHelper } from "@/helpers/toastHelper";
 
 const { showErrorToast } = useToastHelper();
@@ -13,6 +14,9 @@ export const onErrorResponse = (
 
   if (error.response?.status === 401) {
     showErrorToast("Your login session has expired. Please log in again.");
+    router.push({
+      name: "UsersLogin",
+    });
   }
   return Promise.reject(error);
 };

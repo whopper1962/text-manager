@@ -1,8 +1,9 @@
+import { JwtPayload, RequestCustom } from "@/types/auths";
 import { NextFunction, Request, Response } from "express";
 import { verify } from "jsonwebtoken";
 
 export const authenticationCheck = (
-  request: Request,
+  request: RequestCustom,
   response: Response,
   next: NextFunction,
 ) => {
@@ -14,11 +15,15 @@ export const authenticationCheck = (
     const jwtSecretKey = process.env.JWT_SECRET_KEY;
     if (!jwtSecretKey) throw new Error();
 
-    const loggingInUser = verify(token, jwtSecretKey);
+    const loggingInUser = verify(token, jwtSecretKey) as JwtPayload;
     console.log("=============LOGGING IN USER================");
     console.debug(loggingInUser);
+
+    request.loggingInUserId = loggingInUser.id;
+    console.debug(request.loggingInUserId);
     next();
   } catch {
+    request.loggingInUserId = "";
     response.clearCookie("token");
     return response.status(401).send("Authentication Failed");
   }
