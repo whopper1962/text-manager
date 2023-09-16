@@ -1,9 +1,5 @@
 import { Request } from "express";
 
-export interface RequestCustom extends Request {
-  loggingInUserId?: string;
-}
-
 export type LoginPayload = {
   email: string;
   password: string;

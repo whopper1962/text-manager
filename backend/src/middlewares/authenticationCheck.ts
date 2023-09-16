@@ -1,9 +1,9 @@
-import { JwtPayload, RequestCustom } from "@/types/auths";
+import { JwtPayload } from "@/types/auths";
 import { NextFunction, Request, Response } from "express";
 import { verify } from "jsonwebtoken";
 
 export const authenticationCheck = (
-  request: RequestCustom,
+  request: Request,
   response: Response,
   next: NextFunction,
 ) => {
@@ -16,11 +16,8 @@ export const authenticationCheck = (
     if (!jwtSecretKey) throw new Error();
 
     const loggingInUser = verify(token, jwtSecretKey) as JwtPayload;
-    console.log("=============LOGGING IN USER================");
-    console.debug(loggingInUser);
 
     request.loggingInUserId = loggingInUser.id;
-    console.debug(request.loggingInUserId);
     next();
   } catch {
     request.loggingInUserId = "";
