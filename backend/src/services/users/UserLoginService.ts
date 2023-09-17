@@ -15,7 +15,7 @@ export class UserLoginService {
   }
 
   async execute(payload: LoginPayload): Promise<{
-    loggingInUser: User,
+    loggingInUser: User;
     token: string;
   }> {
     const loggingInUser = await this.userRepository.findOne({
@@ -38,7 +38,7 @@ export class UserLoginService {
 
     const jwtPayload = {
       id: loggingInUser.id,
-      email: loggingInUser.email
+      email: loggingInUser.email,
     };
 
     const token = sign(jwtPayload, jwtSecretKey, {
@@ -47,7 +47,7 @@ export class UserLoginService {
 
     return {
       loggingInUser,
-      token
+      token,
     };
   }
 

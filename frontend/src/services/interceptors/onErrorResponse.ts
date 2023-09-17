@@ -1,5 +1,5 @@
 import { isAxiosError, type AxiosError } from "axios";
-import { router } from '@/router';
+import { router } from "@/router";
 import { useToastHelper } from "@/helpers/toastHelper";
 
 const { showErrorToast } = useToastHelper();

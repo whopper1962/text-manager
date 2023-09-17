@@ -13,7 +13,9 @@ export class AuthsController {
     try {
       const { body } = request;
 
-      const { loggingInUser, token } = await new UserLoginService().execute(body);
+      const { loggingInUser, token } = await new UserLoginService().execute(
+        body,
+      );
 
       response.cookie("token", token, {
         httpOnly: true,

@@ -90,11 +90,13 @@
 <script setup lang="ts">
 import { useToastHelper } from "@/helpers/toastHelper";
 import { authsApiServiceService } from "@/services/AuthsApiService";
+import { useAuthInfoStore } from "@/stores/authInfoStore";
 import { LoginPayload } from "@/types/auths";
 import { reactive } from "vue";
 import { useRouter } from "vue-router";
 
 const { showErrorToast, showSuccessToast } = useToastHelper();
+const authInfoStore = useAuthInfoStore();
 const router = useRouter();
 
 const inputedUserInfo = reactive<LoginPayload>({
@@ -105,6 +107,7 @@ const inputedUserInfo = reactive<LoginPayload>({
 const onClickLoginButton = async (): Promise<void> => {
   try {
     const loggedInUser = await authsApiServiceService.login(inputedUserInfo);
+    authInfoStore.setAuthInfo(loggedInUser);
     showSuccessToast(`Welcome back, ${loggedInUser.name}!`);
     router.push({
       name: "TextsIndex",
