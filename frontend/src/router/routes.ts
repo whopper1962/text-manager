@@ -7,6 +7,11 @@ export const routes: Array<RouteRecordRaw> = [
     component: () => import("@/views/texts/TextsIndex.vue"),
   },
   {
+    path: "/texts/register",
+    name: "TextsRegister",
+    component: () => import("@/views/texts/TextsRegister.vue"),
+  },
+  {
     path: "/login",
     name: "UsersLogin",
     component: () => import("@/views/users/UsersLogin.vue"),
@@ -15,6 +20,11 @@ export const routes: Array<RouteRecordRaw> = [
     path: "/signup",
     name: "UsersSignup",
     component: () => import("@/views/users/UsersSignup.vue"),
+  },
+  {
+    path: "/account-settings",
+    name: "AccountSettings",
+    component: () => import("@/views/account/AccountSettings.vue"),
   },
   {
     path: "/:catchAll(.*)",
