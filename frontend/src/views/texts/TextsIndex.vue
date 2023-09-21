@@ -257,8 +257,14 @@
                 {{ formatDateToYyyyMmDdHhMmSs(fetchedText.updatedAt) }}
               </td>
               <td class="px-3 py-2">
-                <div
+                <router-link
                   class="cursor-pointer flex flex-col space-y-4 items-center justify-center"
+                  :to="{
+                    name: 'UsersShow',
+                    params: {
+                      userId: '103fdbec-f581-431f-9a71-f05e6332ab4c'
+                    }
+                  }"
                 >
                   <img
                     :data-popover-target="`popover-${fetchedText.id}`"
@@ -266,7 +272,7 @@
                     src="default_icon2.svg"
                     alt="image description"
                   />
-                </div>
+                </router-link>
                 <div
                   data-popover
                   :id="`popover-${fetchedText.id}`"
