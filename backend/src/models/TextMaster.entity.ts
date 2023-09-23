@@ -12,6 +12,7 @@ import { TextTag } from "@/models/TextTag.entity";
 import { Project } from "./Project.entity";
 import { TextContent } from "./TextContent.entity";
 import { Bookmark } from "./Bookmark.entity";
+import { User } from "./User.entity";
 
 @Entity("text_masters")
 export class TextMaster {
@@ -38,6 +39,13 @@ export class TextMaster {
     onUpdate: "CURRENT_TIMESTAMP(6)",
   })
   readonly updatedAt!: Date;
+
+  @ManyToOne(() => User, (user) => user.updaters)
+  @JoinColumn({
+    name: "updater_id",
+    referencedColumnName: "id",
+  })
+  updater!: User;
 
   @ManyToOne(() => Project, (project) => project.textMasters)
   @JoinColumn({

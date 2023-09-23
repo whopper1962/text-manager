@@ -262,10 +262,11 @@
                   :to="{
                     name: 'UsersShow',
                     params: {
-                      userId: '103fdbec-f581-431f-9a71-f05e6332ab4c'
-                    }
+                      userId: fetchedText.updater.id,
+                    },
                   }"
                 >
+                  <!-- TODO: show profile image -->
                   <img
                     :data-popover-target="`popover-${fetchedText.id}`"
                     class="rounded-full w-12"
@@ -280,7 +281,7 @@
                   class="absolute z-10 invisible inline-block w-fit text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800"
                 >
                   <div class="px-3 py-2">
-                    <p>whopper1962</p>
+                    <p>{{ fetchedText.updater.name }}</p>
                   </div>
                 </div>
               </td>

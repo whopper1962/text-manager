@@ -1,3 +1,5 @@
+import { User } from "./users";
+
 export type Tag = {
   id: string;
   name: string;
@@ -9,6 +11,7 @@ export type Text = {
   tags: Tag[];
   createdAt: Date;
   updatedAt: Date;
+  updater: User;
 };
 
 export type TextsIndexSearchQuery = {

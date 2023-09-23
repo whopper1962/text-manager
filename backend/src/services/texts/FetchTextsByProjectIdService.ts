@@ -37,6 +37,7 @@ export class FetchTextsByProjectIdService {
     const fetchedText = await this.textMasterRepository.find({
       relations: [
         "textContents",
+        "updater",
         "textContents.language",
         "textTags",
         "textTags.tag",
@@ -45,6 +46,9 @@ export class FetchTextsByProjectIdService {
         id: In(fetchedTextIds),
       },
     });
+
+    console.log("===============FETCHED TEXTS=================");
+    console.debug(fetchedText);
 
     return fetchedText.map((fetchedText) => {
       const textByLanguages: Record<string, string> = {};
@@ -58,6 +62,12 @@ export class FetchTextsByProjectIdService {
           id: textTag.tag.id,
           name: textTag.tag.name,
         })),
+        updater: {
+          id: fetchedText.updater?.id,
+          name: fetchedText.updater?.name,
+          email: fetchedText.updater?.email,
+          profileImage: fetchedText.updater.profileImage,
+        },
         createdAt: fetchedText.createdAt,
         updatedAt: fetchedText.updatedAt,
       };

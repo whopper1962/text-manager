@@ -9,6 +9,7 @@ import {
 } from "typeorm";
 import { ProjectMember } from "@/models/ProjectMember.entity";
 import * as bcrypt from "bcrypt";
+import { TextMaster } from "./TextMaster.entity";
 
 @Entity("users")
 export class User {
@@ -55,6 +56,9 @@ export class User {
 
   @OneToMany(() => ProjectMember, (projectMember) => projectMember.member)
   readonly projectMembers!: ProjectMember[];
+
+  @OneToMany(() => TextMaster, (textMaster) => textMaster.updater)
+  readonly updaters!: TextMaster[];
 
   @BeforeInsert()
   async hashPassword() {
