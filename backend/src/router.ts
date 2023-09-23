@@ -19,6 +19,7 @@ router.get("/users", UsersController.fetchAll);
 
 // texts
 router.get("/texts", authenticationCheck, TextsController.fetchAll);
+router.get("/texts/:textId", authenticationCheck, TextsController.fetchById);
 
 // languages
 router.get("/languages", LanguagesController.fetchAll);

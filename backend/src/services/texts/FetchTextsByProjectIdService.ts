@@ -47,9 +47,6 @@ export class FetchTextsByProjectIdService {
       },
     });
 
-    console.log("===============FETCHED TEXTS=================");
-    console.debug(fetchedText);
-
     return fetchedText.map((fetchedText) => {
       const textByLanguages: Record<string, string> = {};
       fetchedText.textContents?.map((textContent) => {

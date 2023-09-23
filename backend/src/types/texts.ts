@@ -14,6 +14,17 @@ export type Text = {
   updater: User;
 };
 
+export type TextDetails = {
+  id: string;
+  text: Record<string, string>;
+  tags: Tag[];
+  createdAt: Date;
+  updatedAt: Date;
+  updater: User;
+  memo: string;
+  alias: string;
+};
+
 export type TextsIndexSearchQuery = {
   keyword: string;
   tagIds: string[];
