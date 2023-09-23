@@ -7,6 +7,11 @@ export const routes: Array<RouteRecordRaw> = [
     component: () => import("@/views/texts/TextsIndex.vue"),
   },
   {
+    path: "/texts/:textId",
+    name: "TextsShow",
+    component: () => import("@/views/texts/TextsShow.vue"),
+  },
+  {
     path: "/users/:userId",
     name: "UsersShow",
     component: () => import("@/views/users/UsersShow.vue"),

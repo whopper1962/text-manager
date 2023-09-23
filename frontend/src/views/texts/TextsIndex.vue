@@ -234,9 +234,10 @@
                 </div>
               </td>
               <td
-                class="px-3 py-2 min-w-max"
+                class="px-3 py-2 min-w-max cursor-pointer"
                 v-for="language in languages"
                 :key="language.id"
+                @click="jumpToTextsShow(fetchedText.id)"
               >
                 {{ fetchedText.text[language.id] }}
               </td>
@@ -355,6 +356,15 @@ const fetchTexts = async (): Promise<void> => {
   } catch {
     throw new Error();
   }
+};
+
+const jumpToTextsShow = (textId: string): void => {
+  router.push({
+    name: "TextsShow",
+    params: {
+      textId,
+    },
+  });
 };
 
 const initializeCheckbox = (): void => {
