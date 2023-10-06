@@ -2,14 +2,7 @@ import { ApiGroupPath } from "@/configs/api.config";
 import { ApiService } from "./ApiService";
 import { CreateProjectPayload } from "@/types/projects";
 
-interface IProjectMembersApiService {
-  create(payload: CreateProjectPayload): Promise<boolean>;
-}
-
-class ProjectMembersApiService
-  extends ApiService
-  implements IProjectMembersApiService
-{
+class ProjectMembersApiService extends ApiService {
   constructor() {
     super(ApiGroupPath.PROJECT_MEMBES);
   }

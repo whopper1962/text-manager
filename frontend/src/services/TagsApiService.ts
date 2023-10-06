@@ -2,11 +2,7 @@ import { ApiGroupPath } from "@/configs/api.config";
 import type { Tag } from "@/types/tags";
 import { ApiService } from "./ApiService";
 
-interface ITagsApiService {
-  fetchAll(): Promise<Tag[]>;
-}
-
-class TagsApiService extends ApiService implements ITagsApiService {
+class TagsApiService extends ApiService {
   constructor() {
     super(ApiGroupPath.TAGS);
   }

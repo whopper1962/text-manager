@@ -3,15 +3,7 @@ import { ApiService } from "./ApiService";
 import { ApiGroupPath } from "@/configs/api.config";
 import { User } from "@/types/users";
 
-interface IAuthsApiServiceService {
-  login(payload: LoginPayload): Promise<User>;
-  signup(payload: SignupPayload): Promise<void>;
-}
-
-class AuthsApiServiceService
-  extends ApiService
-  implements IAuthsApiServiceService
-{
+class AuthsApiServiceService extends ApiService {
   constructor() {
     super();
   }

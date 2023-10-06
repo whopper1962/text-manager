@@ -8,15 +8,6 @@ import { onRequest } from "@/services/interceptors/onRequest";
 import { onResponse } from "@/services/interceptors/onResponse";
 import { onErrorResponse } from "@/services/interceptors/onErrorResponse";
 
-export interface IApiService {
-  post<TRequest, TResponse>(path: string, object: TRequest): Promise<TResponse>;
-  patch<TRequest, TResponse>(
-    path: string,
-    object: TRequest,
-  ): Promise<TResponse>;
-  get<TResponse>(path: string): Promise<TResponse>;
-}
-
 export const ErrorStatusCode = {
   UNAUTHORIZED: 401,
   FORBIDDEN: 403,
@@ -27,7 +18,7 @@ export function isApiClientError(error: unknown): error is AxiosError {
   return Axios.isAxiosError(error);
 }
 
-export class ApiService implements IApiService {
+export class ApiService {
   private axios: AxiosInstance;
 
   constructor(path?: ApiGroupPath) {

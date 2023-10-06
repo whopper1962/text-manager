@@ -2,12 +2,7 @@ import { ApiGroupPath } from "@/configs/api.config";
 import type { TextsIndexSearchQuery, Text, TextDetails } from "@/types/texts";
 import { ApiService } from "./ApiService";
 
-interface ITextsApiService {
-  fetchAll(query: TextsIndexSearchQuery): Promise<Text[]>;
-  fetchById(textId: string): Promise<TextDetails>;
-}
-
-class TextsApiService extends ApiService implements ITextsApiService {
+class TextsApiService extends ApiService {
   constructor() {
     super(ApiGroupPath.TEXTS);
   }

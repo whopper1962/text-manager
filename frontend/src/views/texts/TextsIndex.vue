@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      class="w-100 p-6 mb-5 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+      class="w-100 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
     >
       <div class="grid md:grid-cols-2 md:gap-6">
         <div class="z-auto w-full mb-6 group">
@@ -169,18 +169,25 @@
       </div>
       <button
         type="button"
-        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-52 px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         @click="onClickSearchButton()"
       >
         Search
       </button>
       <button
         type="button"
-        class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800 md:ml-3 mt-3 md:mt-0"
+        class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm w-full sm:w-52 px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800 md:ml-3 mt-3 md:mt-0"
         @click="onClickClearButton()"
       >
         Clear
       </button>
+    </div>
+
+    <div class="flex flex-col space-y-4 items-end justify-end my-5">
+      <AppModalButton
+        :modal-id="`textExportModal`"
+        :button-text="`Export texts`"
+      />
     </div>
 
     <template v-if="fetchedTexts.length > 0">
@@ -295,6 +302,8 @@
     <template v-else>
       <TextNotFound />
     </template>
+
+    <TextExportModal />
   </div>
 </template>
 
@@ -314,6 +323,8 @@ import { initFlowbite } from "flowbite";
 import { useToastHelper } from "@/helpers/toastHelper";
 import TextNotFound from "@/components/TextsIndex/TextNotFound.vue";
 import { projectsApiService } from "@/services/ProjectsApiService";
+import TextExportModal from "@/components/TextsIndex/TextExportModal.vue";
+import AppModalButton from "@/components/AppModalButton.vue";
 
 const fetchedTexts = ref<Text[]>([]);
 const languages = ref<Language[]>([]);

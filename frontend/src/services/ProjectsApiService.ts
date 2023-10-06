@@ -3,12 +3,7 @@ import { ApiService } from "./ApiService";
 import { CreateProjectPayload } from "@/types/projects";
 import { Project } from "@/types/projects";
 
-interface IProjectsApiService {
-  fetchAll(): Promise<Project[]>;
-  create(payload: CreateProjectPayload): Promise<void>;
-}
-
-class ProjectsApiService extends ApiService implements IProjectsApiService {
+class ProjectsApiService extends ApiService {
   constructor() {
     super(ApiGroupPath.PROJECTS);
   }

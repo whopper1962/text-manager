@@ -7,5 +7,5 @@ export class NotFoundError extends Error {
 export const NotFoundModelName = {
   USER: "User",
   PROJECT: "Project",
-  TEXT: "Text"
+  TEXT: "Text",
 } as const;
