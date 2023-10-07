@@ -11,7 +11,7 @@
         <button
           type="button"
           class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-          :data-modal-hide="props.modalId"
+          @click="closeModal()"
         >
           <svg
             class="w-3 h-3"
@@ -48,12 +48,20 @@
 </template>
 
 <script setup lang="ts">
+import { useModalHelper } from "@/helpers/modalHelper";
+
 type Props = {
   modalId: string;
   modalTitle: string;
 };
 
 const props = defineProps<Props>();
+
+const { hideModal } = useModalHelper();
+
+const closeModal = () => {
+  hideModal(props.modalId);
+};
 </script>
 
 <style scoped></style>

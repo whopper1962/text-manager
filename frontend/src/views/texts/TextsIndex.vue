@@ -184,10 +184,13 @@
     </div>
 
     <div class="flex flex-col space-y-4 items-end justify-end my-5">
-      <AppModalButton
-        :modal-id="`textExportModal`"
-        :button-text="`Export texts`"
-      />
+      <button
+        type="button"
+        class="text-gray-900 sm:w-52 w-full bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
+        @click="showExportModal()"
+      >
+        Export texts
+      </button>
     </div>
 
     <template v-if="fetchedTexts.length > 0">
@@ -324,7 +327,8 @@ import { useToastHelper } from "@/helpers/toastHelper";
 import TextNotFound from "@/components/TextsIndex/TextNotFound.vue";
 import { projectsApiService } from "@/services/ProjectsApiService";
 import TextExportModal from "@/components/TextsIndex/TextExportModal.vue";
-import AppModalButton from "@/components/AppModalButton.vue";
+import { useModalHelper } from "@/helpers/modalHelper";
+// import AppModalButton from "@/components/AppModalButton.vue";
 
 const fetchedTexts = ref<Text[]>([]);
 const languages = ref<Language[]>([]);
@@ -343,6 +347,7 @@ const inputedSeachQuery = reactive<TextsIndexSearchQuery>({
   ...initialSearchQuery,
 });
 
+const { showModal } = useModalHelper();
 const { formatDateToYyyyMmDdHhMmSs } = useFormatHelper();
 const { showErrorToast } = useToastHelper();
 const router = useRouter();
@@ -354,6 +359,11 @@ const onClickSearchButton = async (): Promise<void> => {
   } catch {
     showErrorToast();
   }
+};
+
+const showExportModal = () => {
+  showModal("textExportModal");
+  // hideModal("textExportModal");
 };
 
 const fetchTexts = async (): Promise<void> => {
