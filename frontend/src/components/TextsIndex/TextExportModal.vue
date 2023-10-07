@@ -6,24 +6,20 @@
       </p>
       <ul class="my-4 space-y-3">
         <li>
-          <router-link
-            :to="{
-              name: 'ExportsCsv',
-            }"
-            class="flex items-center p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white"
+          <button
+            class="flex w-full items-center p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white"
+            @click="jumpToCsvExport()"
           >
             <span class="flex-1 ml-3 whitespace-nowrap">CSV</span>
-          </router-link>
+          </button>
         </li>
         <li>
-          <router-link
-            :to="{
-              name: 'ExportsJson',
-            }"
-            class="flex items-center p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white"
+          <button
+            class="flex w-full items-center p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white"
+            @click="jumpToJsonExport()"
           >
             <span class="flex-1 ml-3 whitespace-nowrap">JSON</span>
-          </router-link>
+          </button>
         </li>
       </ul>
     </template>
@@ -32,6 +28,20 @@
 
 <script setup lang="ts">
 import AppModal from "../AppModal.vue";
+
+type Emits = {
+  (e: "jumpToJsonExport"): void;
+  (e: "jumpToCsvExport"): void;
+};
+const emit = defineEmits<Emits>();
+
+const jumpToJsonExport = () => {
+  emit("jumpToJsonExport");
+};
+
+const jumpToCsvExport = () => {
+  emit("jumpToCsvExport");
+};
 </script>
 
 <style scoped></style>

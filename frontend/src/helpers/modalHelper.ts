@@ -15,6 +15,6 @@ export const useModalHelper = () => {
 
   return {
     showModal,
-    hideModal
-  }
+    hideModal,
+  };
 };

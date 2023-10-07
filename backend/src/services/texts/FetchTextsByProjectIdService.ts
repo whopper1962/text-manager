@@ -48,9 +48,18 @@ export class FetchTextsByProjectIdService {
     });
 
     return fetchedText.map((fetchedText) => {
-      const textByLanguages: Record<string, string> = {};
+      const textByLanguages: Record<
+        string,
+        {
+          content: string;
+          alias: string;
+        }
+      > = {};
       fetchedText.textContents?.map((textContent) => {
-        textByLanguages[textContent.language.id] = textContent.content;
+        textByLanguages[textContent.language.id] = {
+          content: textContent.content,
+          alias: fetchedText.alias,
+        };
       });
       return {
         id: fetchedText.id,

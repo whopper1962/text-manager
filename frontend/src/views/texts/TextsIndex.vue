@@ -249,7 +249,7 @@
                 :key="language.id"
                 @click="jumpToTextsShow(fetchedText.id)"
               >
-                {{ fetchedText.text[language.id] }}
+                {{ fetchedText.text[language.id].content }}
               </td>
               <td class="px-3 py-2">
                 <button
@@ -306,7 +306,10 @@
       <TextNotFound />
     </template>
 
-    <TextExportModal />
+    <TextExportModal
+      @jumpToJsonExport="jumpToJsonExport()"
+      @jumpToCsvExport="jumpToCsvExport()"
+    />
   </div>
 </template>
 
@@ -328,7 +331,6 @@ import TextNotFound from "@/components/TextsIndex/TextNotFound.vue";
 import { projectsApiService } from "@/services/ProjectsApiService";
 import TextExportModal from "@/components/TextsIndex/TextExportModal.vue";
 import { useModalHelper } from "@/helpers/modalHelper";
-// import AppModalButton from "@/components/AppModalButton.vue";
 
 const fetchedTexts = ref<Text[]>([]);
 const languages = ref<Language[]>([]);
@@ -363,7 +365,31 @@ const onClickSearchButton = async (): Promise<void> => {
 
 const showExportModal = () => {
   showModal("textExportModal");
-  // hideModal("textExportModal");
+};
+
+const jumpToJsonExport = () => {
+  const json = generateJsonObj();
+  localStorage.setItem("jsonToExport", JSON.stringify(json));
+  router.push({
+    name: "ExportsJson",
+  });
+};
+
+const generateJsonObj = () => {
+  const json: Record<string, Record<string, string>> = {};
+  for (const language of languages.value) {
+    json[language.id] = {};
+    for (const fetchedText of fetchedTexts.value) {
+      json[language.id][fetchedText.text[language.id].alias] =
+        fetchedText.text[language.id].content;
+    }
+  }
+  return json;
+};
+
+const jumpToCsvExport = () => {
+  const csv: string[] = [];
+  localStorage.setItem("csvToExport", JSON.stringify(csv));
 };
 
 const fetchTexts = async (): Promise<void> => {
