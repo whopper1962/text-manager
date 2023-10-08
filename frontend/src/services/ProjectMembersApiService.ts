@@ -8,7 +8,7 @@ class ProjectMembersApiService extends ApiService {
   }
 
   async create(payload: CreateProjectPayload): Promise<boolean> {
-    return await this.post<CreateProjectPayload, boolean>("", payload);
+    return await this.post<boolean, CreateProjectPayload>("", payload);
   }
 }
 

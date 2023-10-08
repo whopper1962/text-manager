@@ -9,11 +9,11 @@ class AuthsApiServiceService extends ApiService {
   }
 
   async login(payload: LoginPayload): Promise<User> {
-    return await this.post<LoginPayload, User>(ApiGroupPath.LOGIN, payload);
+    return await this.post<User, LoginPayload>(ApiGroupPath.LOGIN, payload);
   }
 
   async signup(payload: SignupPayload): Promise<void> {
-    return await this.post<SignupPayload, void>(ApiGroupPath.SIGNUP, payload);
+    return await this.post<void, SignupPayload>(ApiGroupPath.SIGNUP, payload);
   }
 }
 

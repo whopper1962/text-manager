@@ -13,7 +13,7 @@ class ProjectsApiService extends ApiService {
   }
 
   async create(payload: CreateProjectPayload): Promise<void> {
-    return await this.post<CreateProjectPayload, void>("", payload);
+    return await this.post<void, CreateProjectPayload>("", payload);
   }
 }
 

@@ -1,84 +1,102 @@
-import Axios, {
-  AxiosError,
-  type AxiosResponse,
-  type AxiosInstance,
-} from "axios";
+import Axios, { AxiosError, type AxiosResponse } from "axios";
 import type { ApiGroupPath } from "@/configs/api.config";
-import { onRequest } from "@/services/interceptors/onRequest";
-import { onResponse } from "@/services/interceptors/onResponse";
-import { onErrorResponse } from "@/services/interceptors/onErrorResponse";
+import type { AxiosInstance, AxiosRequestConfig } from "axios";
+import { onRequest } from "./interceptors/onRequest";
+import { onResponse } from "./interceptors/onResponse";
+import { onErrorResponse } from "./interceptors/onErrorResponse";
 
 export const ErrorStatusCode = {
   UNAUTHORIZED: 401,
   FORBIDDEN: 403,
   INTERNAL_SERVER_ERROR: 500,
 } as const;
+export type ErrorStatusCode =
+  (typeof ErrorStatusCode)[keyof typeof ErrorStatusCode];
 
 export function isApiClientError(error: unknown): error is AxiosError {
   return Axios.isAxiosError(error);
 }
 
 export class ApiService {
-  private axios: AxiosInstance;
+  private client: AxiosInstance;
 
   constructor(path?: ApiGroupPath) {
-    this.axios = Axios.create({
-      baseURL: `${import.meta.env.VITE_API_BASE_URL}${path ? path : ""}`,
-      withCredentials: true,
+    this.client = Axios.create({
+      baseURL: `${import.meta.env.VITE_API_BASE_URL}${path || ""}`,
       responseType: "json" as const,
       headers: {},
       timeout: 30000,
     });
-    this.axios.interceptors.request.use(onRequest);
-    this.axios.interceptors.response.use(onResponse, onErrorResponse);
+    this.client.interceptors.request.use(onRequest);
+    this.client.interceptors.response.use(onResponse, onErrorResponse);
   }
 
-  async post<TRequest, TResponse>(
-    path: string,
-    payload: TRequest,
-  ): Promise<TResponse> {
+  async get<T>(url: string, config?: AxiosRequestConfig): Promise<T> {
     try {
-      const response = await this.axios.post<TResponse>(path, payload);
+      const response: AxiosResponse<T> = await this.client.get<T>(url, config);
       return response.data;
     } catch (error) {
       throw error;
     }
   }
 
-  async patch<TRequest, TResponse>(
-    path: string,
-    payload: TRequest,
-  ): Promise<TResponse> {
+  async post<T = any, D = any>(
+    url: string,
+    data?: D,
+    config?: AxiosRequestConfig,
+  ): Promise<T> {
     try {
-      const response = await this.axios.patch<TResponse>(path, payload);
+      const response: AxiosResponse<T> = await this.client.post<
+        T,
+        AxiosResponse<T>,
+        D
+      >(url, data, config);
       return response.data;
     } catch (error) {
       throw error;
     }
   }
 
-  async get<TResponse>(
-    path: string,
-    params?: Record<string, any>,
-  ): Promise<TResponse> {
+  async patch<T = any, D = any>(
+    url: string,
+    data?: D,
+    config?: AxiosRequestConfig,
+  ): Promise<T> {
     try {
-      let response: AxiosResponse<TResponse>;
-      if (params) {
-        response = await this.axios.get<TResponse>(path, {
-          params,
-        });
-      } else {
-        response = await this.axios.get<TResponse>(path);
-      }
+      const response: AxiosResponse<T> = await this.client.patch<
+        T,
+        AxiosResponse<T>,
+        D
+      >(url, data, config);
       return response.data;
     } catch (error) {
       throw error;
     }
   }
 
-  async delete<TResponse>(path: string): Promise<TResponse> {
+  async put<T = any, D = any>(
+    url: string,
+    data?: D,
+    config?: AxiosRequestConfig,
+  ): Promise<T> {
     try {
-      const response = await this.axios.delete<TResponse>(path);
+      const response: AxiosResponse<T> = await this.client.put<
+        T,
+        AxiosResponse<T>,
+        D
+      >(url, data, config);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async delete<T>(url: string, config?: AxiosRequestConfig): Promise<T> {
+    try {
+      const response: AxiosResponse<T> = await this.client.delete<T>(
+        url,
+        config,
+      );
       return response.data;
     } catch (error) {
       throw error;

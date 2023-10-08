@@ -8,7 +8,9 @@ class TextsApiService extends ApiService {
   }
 
   async fetchAll(query: Partial<TextsIndexSearchQuery>): Promise<Text[]> {
-    return await this.get<Text[]>("", query);
+    return await this.get<Text[]>("", {
+      params: query,
+    });
   }
 
   async fetchById(textId: string): Promise<TextDetails> {
