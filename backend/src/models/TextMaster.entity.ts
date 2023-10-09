@@ -25,7 +25,6 @@ export class TextMaster {
   })
   alias!: string;
 
-
   @Column({
     name: "memo",
     type: "text",
