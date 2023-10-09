@@ -253,7 +253,7 @@
               </td>
               <td class="px-3 py-2">
                 <button
-                  class="text-white bg-purple-700 hover:bg-purple-800 min-w-max focus:outline-none focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm px-5 py-2.5 m-1 text-center dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 ml-2"
+                  class="text-white bg-purple-700 hover:bg-purple-800 min-w-max focus:outline-none focus:ring-4 focus:ring-purple-300 font-medium rounded-full text-sm px-5 py-2 m-1 text-center dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 ml-2"
                   v-for="tag in fetchedText.tags"
                   :key="tag.id"
                   @click="onClickTag(tag.id)"
