@@ -29,6 +29,7 @@ export type TextDetails = {
   updater: User;
   memo: string;
   alias: string;
+  bookmarked: boolean;
 };
 
 export type TextsIndexSearchQuery = {

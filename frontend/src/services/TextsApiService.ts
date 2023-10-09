@@ -20,6 +20,10 @@ class TextsApiService extends ApiService {
   async postBookmark(textId: string): Promise<void> {
     return await this.post<void>(`/${textId}/bookmark`);
   }
+
+  async deleteBookmark(textId: string): Promise<void> {
+    return await this.delete<void>(`/${textId}/bookmark`);
+  }
 }
 
 export const textsApiService: TextsApiService = new TextsApiService();

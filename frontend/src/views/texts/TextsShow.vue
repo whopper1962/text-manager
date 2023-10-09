@@ -1,14 +1,21 @@
 <template>
   <div>
-    {{ textId }}
-
     <button
-        type="button"
-        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-52 px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-      @click="onClickBookmark()"
-      >
+      v-if="textDetails?.bookmarked"
+      type="button"
+      class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-52 px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+      @click="deleteBookmark()"
+    >
+      Unbookmark
+    </button>
+    <button
+      v-else
+      type="button"
+      class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-52 px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+      @click="postBookmark()"
+    >
       Bookmark
-      </button>
+    </button>
   </div>
 </template>
 
@@ -28,21 +35,30 @@ const { showErrorToast } = useToastHelper();
 
 const textId = route.params.textId.toString();
 
-const text = ref<TextDetails>();
+const textDetails = ref<TextDetails>();
 const languages = ref<Language[]>([]);
 
 const fetchTextById = async (): Promise<void> => {
   try {
     const fetchedText = await textsApiService.fetchById(textId);
-    Object.assign(text, fetchedText);
+    textDetails.value = fetchedText;
   } catch {
     throw new Error();
   }
 };
 
-const onClickBookmark = async (): Promise<void> => {
+const postBookmark = async (): Promise<void> => {
   try {
     await textsApiService.postBookmark(textId);
+    await fetchTextById();
+  } catch {
+    showErrorToast();
+  }
+};
+
+const deleteBookmark = async (): Promise<void> => {
+  try {
+    await textsApiService.deleteBookmark(textId);
     await fetchTextById();
   } catch {
     showErrorToast();

@@ -25,6 +25,14 @@ export class TextMaster {
   })
   alias!: string;
 
+
+  @Column({
+    name: "memo",
+    type: "text",
+    nullable: true,
+  })
+  memo!: string;
+
   @CreateDateColumn({
     name: "created_at",
     type: "timestamp",
