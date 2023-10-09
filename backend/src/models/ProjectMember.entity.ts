@@ -54,6 +54,6 @@ export class ProjectMember {
   })
   member!: User;
 
-  @OneToMany(() => Bookmark, (bookmark) => bookmark.textMaster)
+  @OneToMany(() => Bookmark, (bookmark) => bookmark.projectMember)
   readonly bookmarks!: Bookmark[];
 }

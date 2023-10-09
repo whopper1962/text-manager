@@ -8,6 +8,7 @@ import {
 } from "typeorm";
 import { Tag } from "@/models/Tag.entity";
 import { TextMaster } from "./TextMaster.entity";
+import { ProjectMember } from "./ProjectMember.entity";
 
 @Entity("bookmarks")
 export class Bookmark {
@@ -30,14 +31,14 @@ export class Bookmark {
   readonly updatedAt!: Date;
 
   // TODO: Validation unique text_master_id+tag_id
-  @ManyToOne(() => TextMaster, (textMaster) => textMaster.textTags)
+  @ManyToOne(() => TextMaster, (textMaster) => textMaster.bookmarks)
   @JoinColumn({
     name: "text_master_id",
     referencedColumnName: "id",
   })
   textMaster!: TextMaster;
 
-  @ManyToOne(() => Tag, (tag) => tag.textTags)
+  @ManyToOne(() => ProjectMember, (projectMember) => projectMember.bookmarks)
   @JoinColumn({
     name: "project_member_id",
     referencedColumnName: "id",

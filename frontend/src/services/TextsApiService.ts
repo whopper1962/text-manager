@@ -16,6 +16,10 @@ class TextsApiService extends ApiService {
   async fetchById(textId: string): Promise<TextDetails> {
     return await this.get<TextDetails>(`/${textId}`);
   }
+
+  async postBookmark(textId: string): Promise<void> {
+    return await this.post<void>(`/${textId}/bookmark`);
+  }
 }
 
 export const textsApiService: TextsApiService = new TextsApiService();

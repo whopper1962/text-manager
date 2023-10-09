@@ -5,27 +5,27 @@ import { LoginPayload, SignupPayload } from "@/types/auths";
 import { NextFunction, Request, Response } from "express";
 
 export class AuthsController {
-  static async login(
-    request: Request<any, any, LoginPayload>,
-    response: Response<User>,
-    next: NextFunction,
-  ): Promise<void> {
-    try {
-      const { body } = request;
+static async login(
+  request: Request<any, any, LoginPayload>,
+  response: Response<User>,
+  next: NextFunction,
+): Promise<void> {
+  try {
+    const { body } = request;
 
-      const { loggingInUser, token } = await new UserLoginService().execute(
-        body,
-      );
+    const { loggingInUser, token } = await new UserLoginService().execute(
+      body,
+    );
 
-      response.cookie("token", token, {
-        httpOnly: true,
-      });
+    response.cookie("token", token, {
+      httpOnly: true,
+    });
 
-      response.json(loggingInUser);
-    } catch (e) {
-      next(e);
-    }
+    response.json(loggingInUser);
+  } catch (e) {
+    next(e);
   }
+}
 
   static async signup(
     request: Request<any, any, SignupPayload>,

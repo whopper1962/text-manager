@@ -20,6 +20,7 @@ router.get("/users", UsersController.fetchAll);
 // texts
 router.get("/texts", authenticationCheck, TextsController.fetchAll);
 router.get("/texts/:textId", authenticationCheck, TextsController.fetchById);
+router.post("/texts/:textId/bookmark", authenticationCheck, TextsController.updateBookmark);
 
 // languages
 router.get("/languages", LanguagesController.fetchAll);

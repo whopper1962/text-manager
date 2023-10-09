@@ -24,6 +24,7 @@ export class ApiService {
     this.client = Axios.create({
       baseURL: `${import.meta.env.VITE_API_BASE_URL}${path || ""}`,
       responseType: "json" as const,
+      withCredentials: true,
       headers: {},
       timeout: 30000,
     });
