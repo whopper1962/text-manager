@@ -17,7 +17,7 @@ class TextsApiService extends ApiService {
     return await this.get<TextDetails>(`/${textId}`);
   }
 
-  async postBookmark(textId: string): Promise<void> {
+  async createBookmark(textId: string): Promise<void> {
     return await this.post<void>(`/${textId}/bookmark`);
   }
 

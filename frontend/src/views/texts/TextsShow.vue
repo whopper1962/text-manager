@@ -1,21 +1,19 @@
 <template>
   <div>
-    <button
+    <font-awesome-icon
       v-if="textDetails?.bookmarked"
-      type="button"
-      class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-52 px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+      class="m-3 cursor-pointer"
+      :icon="['fas', 'bookmark']"
+      size="xl"
       @click="deleteBookmark()"
-    >
-      Unbookmark
-    </button>
-    <button
+    />
+    <font-awesome-icon
       v-else
-      type="button"
-      class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-52 px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-      @click="postBookmark()"
-    >
-      Bookmark
-    </button>
+      class="m-3 cursor-pointer"
+      :icon="['far', 'bookmark']"
+      size="xl"
+      @click="createBookmark()"
+    />
   </div>
 </template>
 
@@ -47,9 +45,9 @@ const fetchTextById = async (): Promise<void> => {
   }
 };
 
-const postBookmark = async (): Promise<void> => {
+const createBookmark = async (): Promise<void> => {
   try {
-    await textsApiService.postBookmark(textId);
+    await textsApiService.createBookmark(textId);
     await fetchTextById();
   } catch {
     showErrorToast();
